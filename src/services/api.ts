@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { SearchResponse } from "./SearchResponse";
+import type { SearchResponse } from "../models/SearchResponse";
 
 const BASE_URL = "https://api.themoviedb.org/3";
 const API_KEY = import.meta.env.VITE_OWM_APIKEY;

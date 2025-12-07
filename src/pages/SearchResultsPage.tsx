@@ -1,3 +1,4 @@
+import MovieCardComponent from "../components/MovieCardComponent";
 import { useMovies } from "../contexts/MovieContext";
 
 const SearchResultsPage = () => {
@@ -9,8 +10,7 @@ const SearchResultsPage = () => {
         <div>
           {searchResponse.results.map((movie) => (
             <div key={movie.id}>
-              <h2>{movie.title}</h2>
-              <p>Release Date: {movie.release_date}</p>
+              <MovieCardComponent movieCard={movie} />
             </div>
           ))}
         </div>

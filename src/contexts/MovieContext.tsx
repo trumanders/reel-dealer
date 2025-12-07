@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
 import { search } from "../services/api";
-import type { SearchResponse } from "../services/SearchResponse";
+import type { SearchResponse } from "../models/SearchResponse";
 
 interface MovieContextType {
   searchText: string;

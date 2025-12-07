@@ -18,10 +18,10 @@ const Navigation = () => {
             <Nav.Link as={NavLink} to="/">
               HEJ
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/todos" end>
+            <Nav.Link as={NavLink} to="/" end>
               DIN
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/todos/add" end>
+            <Nav.Link as={NavLink} to="/" end>
               GOING
             </Nav.Link>
           </Nav>

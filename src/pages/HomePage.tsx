@@ -26,7 +26,7 @@ const Category: React.FC<CategoryProps> = ({ moviesInCategory, title }) => (
   </>
 );
 
-const Home = () => {
+const HomePage = () => {
   const [trending, setTrending] = useState<MoviesSearchResponse | null>(null);
   const [nowPlaying, setNowPlaying] = useState<MoviesSearchResponse | null>(
     null
@@ -56,4 +56,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;

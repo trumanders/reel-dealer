@@ -1,5 +1,38 @@
 @import "bootstrap/scss/bootstrap";
 
+body {
+  background-color: rgb(0, 0, 0);
+  color: white;
+}
+
 .searchResults {
   display: flex;
+}
+
+.categories-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding-top: 30px;
+}
+
+.category {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: gray transparent;
+  padding-bottom: 15px;
+  padding-top: 10px;
+}
+
+.movie-card {
+  cursor: pointer;
+  color: white;
+  width: 14rem;
+  height: 40rem;
+  background-color: rgb(31, 31, 31);
+  border-style: none;
+  border-radius: 10px;
 }

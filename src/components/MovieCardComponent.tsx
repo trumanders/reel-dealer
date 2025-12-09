@@ -18,7 +18,7 @@ const MovieCardComponent: React.FC<MovieCardProps> = ({ movie }) => {
   };
 
   return (
-    <Card style={{ width: "18rem" }} onClick={handleSelectedMovie}>
+    <Card className="movie-card" onClick={handleSelectedMovie}>
       <Card.Img
         variant="top"
         src={IMAGE_BASE_URL + movie.poster_path || "/placeholder.jpg"}

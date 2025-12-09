@@ -21,21 +21,21 @@ export const search = async (query: string, page: number = 1) => {
 
 export const getNowPlaying = async (page: number = 1) => {
   const result = await axios.get<MoviesSearchResponse>(
-    BASE_URL + `movie/now_playing?api_key=${API_KEY}&page=${page}`
+    `${BASE_URL}/movie/now_playing?api_key=${API_KEY}&page=${page}`
   );
   return result.data;
 };
 
 export const getTrendingToday = async (page: number = 1) => {
   const result = await axios.get<MoviesSearchResponse>(
-    BASE_URL + `/trending/movie/day?api_key=${API_KEY}&page=${page}`
+    `${BASE_URL}/trending/movie/day?api_key=${API_KEY}&page=${page}`
   );
   return result.data;
 };
 
 export const getTop = async (page: number = 1) => {
   const result = await axios.get<MoviesSearchResponse>(
-    BASE_URL + `/movie/top_rated?api_key=${API_KEY}&page=${page}`
+    `${BASE_URL}/movie/top_rated?api_key=${API_KEY}&page=${page}`
   );
   return result.data;
 };

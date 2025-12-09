@@ -5,16 +5,19 @@ const SearchResultsPage = () => {
   const { searchResponse } = useMovies();
   return (
     <>
-      <h1>SEARCH RESULTS:</h1>
-      {searchResponse ? (
-        <div>
-          {searchResponse.results.map((movie) => (
-            <div key={movie.id}>
-              <MovieCardComponent movieCard={movie} />
-            </div>
-          ))}
-        </div>
-      ) : null}
+      <div className="searchResults">
+        {searchResponse && searchResponse.results.length > 0 ? (
+          <div>
+            {searchResponse.results.map((movie) => (
+              <div key={movie.id}>
+                <MovieCardComponent movie={movie} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div>No search results to display.</div>
+        )}
+      </div>
     </>
   );
 };

@@ -1,7 +1,8 @@
 import { Button, Form, InputGroup } from "react-bootstrap";
 import { useMovies } from "../contexts/MovieContext";
-
+import { useNavigate } from "react-router";
 const Search = () => {
+  const navigate = useNavigate();
   const { searchText, setSearchText, handleSearch } = useMovies();
 
   const handleSearchTextChange = (value: string) => {
@@ -11,6 +12,7 @@ const Search = () => {
   const onSearch = (e: React.FormEvent) => {
     e.preventDefault();
     handleSearch(searchText.trim());
+    navigate(`/`);
   };
 
   return (

@@ -1,6 +1,6 @@
 import type { Movie } from "./Movie";
 
-export interface SearchResponse {
+export interface MoviesSearchResponse {
   page: number;
   results: Movie[];
   total_pages: number;

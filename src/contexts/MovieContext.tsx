@@ -1,7 +1,8 @@
 import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
 import { search } from "../services/api";
-import type { SearchResponse } from "../models/SearchResponse";
+import type { MoviesSearchResponse } from "../models/MoviesSearchResponse";
+import type { Movie } from "../models/Movie";
 
 interface MovieContextType {
   searchText: string;
@@ -10,11 +11,13 @@ interface MovieContextType {
   setError: React.Dispatch<React.SetStateAction<string | null>>;
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  searchResponse: SearchResponse | null;
+  searchResponse: MoviesSearchResponse | null;
   setSearchResponse: React.Dispatch<
-    React.SetStateAction<SearchResponse | null>
+    React.SetStateAction<MoviesSearchResponse | null>
   >;
-  handleSearch: (searchText: string, page?: number) => Promise<SearchResponse>;
+  handleSearch: (searchText: string, page?: number) => void;
+  movie: Movie | null;
+  setMovie: React.Dispatch<React.SetStateAction<Movie | null>>;
 }
 
 interface TodosProviderProps {
@@ -27,15 +30,13 @@ export const MovieProvider = ({ children }: TodosProviderProps) => {
   const [searchText, setSearchText] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [searchResponse, setSearchResponse] = useState<SearchResponse | null>(
-    null
-  );
+  const [searchResponse, setSearchResponse] =
+    useState<MoviesSearchResponse | null>(null);
+  const [movie, setMovie] = useState<Movie | null>(null);
 
   const handleSearch = async (searchText: string, page: number = 1) => {
-    // API call
     const result = await search(searchText, page);
     setSearchResponse(result);
-    return result;
   };
 
   return (
@@ -50,6 +51,8 @@ export const MovieProvider = ({ children }: TodosProviderProps) => {
         setSearchResponse,
         setSearchText,
         handleSearch,
+        movie,
+        setMovie,
       }}
     >
       {children}

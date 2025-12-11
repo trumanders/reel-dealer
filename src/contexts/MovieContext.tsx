@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
-import { search } from "../services/api";
+import { getMovie, search } from "../services/api";
 import type { MoviesSearchResponse } from "../models/MoviesSearchResponse";
 import type { Movie } from "../models/Movie";
 
@@ -18,6 +18,7 @@ interface MovieContextType {
   handleSearch: (searchText: string, page?: number) => void;
   movie: Movie | null;
   setMovie: React.Dispatch<React.SetStateAction<Movie | null>>;
+  loadMovie: (movieId: number) => void;
 }
 
 interface TodosProviderProps {
@@ -39,6 +40,12 @@ export const MovieProvider = ({ children }: TodosProviderProps) => {
     setSearchResponse(result);
   };
 
+  const loadMovie = async (movieId: number) => {
+    const movieResult = await getMovie(movieId);
+    console.log("loadMovie", movieResult);
+    setMovie(movieResult);
+  };
+
   return (
     <MovieContext.Provider
       value={{
@@ -53,6 +60,7 @@ export const MovieProvider = ({ children }: TodosProviderProps) => {
         handleSearch,
         movie,
         setMovie,
+        loadMovie,
       }}
     >
       {children}

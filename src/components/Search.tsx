@@ -13,7 +13,7 @@ const Search = () => {
   const onSearch = (e: React.FormEvent) => {
     e.preventDefault();
     handleSearch(searchText.trim());
-    navigate(`/`);
+    navigate(`/search`);
   };
 
   return (

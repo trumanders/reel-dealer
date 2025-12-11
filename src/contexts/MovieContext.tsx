@@ -1,8 +1,9 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
-import { getMovie, search } from "../services/api";
+import { getAllGenres, getMovie, search } from "../services/api";
 import type { MoviesSearchResponse } from "../models/MoviesSearchResponse";
 import type { Movie } from "../models/Movie";
+import type { Genre } from "../models/Genre";
 
 interface MovieContextType {
   searchText: string;
@@ -19,6 +20,8 @@ interface MovieContextType {
   movie: Movie | null;
   setMovie: React.Dispatch<React.SetStateAction<Movie | null>>;
   loadMovie: (movieId: number) => void;
+  genres: Genre[];
+  setGenres: React.Dispatch<React.SetStateAction<Genre[]>>;
 }
 
 interface TodosProviderProps {
@@ -34,6 +37,7 @@ export const MovieProvider = ({ children }: TodosProviderProps) => {
   const [searchResponse, setSearchResponse] =
     useState<MoviesSearchResponse | null>(null);
   const [movie, setMovie] = useState<Movie | null>(null);
+  const [genres, setGenres] = useState<Genre[]>([]);
 
   const handleSearch = async (searchText: string, page: number = 1) => {
     const result = await search(searchText, page);
@@ -45,6 +49,16 @@ export const MovieProvider = ({ children }: TodosProviderProps) => {
     console.log("loadMovie", movieResult);
     setMovie(movieResult);
   };
+
+  useEffect(() => {
+    const loadGenres = async () => {
+      const fetchedGenres = await getAllGenres();
+      setGenres(fetchedGenres);
+    };
+    loadGenres();
+  }, []);
+
+  console.log("Fetched genressssss:", genres);
 
   return (
     <MovieContext.Provider
@@ -61,6 +75,8 @@ export const MovieProvider = ({ children }: TodosProviderProps) => {
         movie,
         setMovie,
         loadMovie,
+        genres,
+        setGenres,
       }}
     >
       {children}

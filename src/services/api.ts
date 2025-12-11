@@ -2,6 +2,7 @@ import axios from "axios";
 import type { MoviesSearchResponse } from "../models/MoviesSearchResponse";
 import type { Credits } from "../models/Credits";
 import type { Movie } from "../models/Movie";
+import type { Genre } from "../models/Genre";
 
 const BASE_URL = "https://api.themoviedb.org/3";
 const API_KEY = import.meta.env.VITE_OWM_APIKEY;
@@ -62,4 +63,11 @@ export const getMovieCredits = async (movieId: number) => {
         (error instanceof Error ? error?.message : "Unknown error.")
     );
   }
+};
+
+export const getAllGenres = async () => {
+  const result = await axios.get<{ genres: Genre[] }>(
+    `${BASE_URL}/genre/movie/list?api_key=${API_KEY}`
+  );
+  return result.data.genres;
 };

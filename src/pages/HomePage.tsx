@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { getNowPlaying, getTop, getTrendingToday } from "../services/api";
+import {
+  getAllGenres,
+  getNowPlaying,
+  getTop,
+  getTrendingToday,
+} from "../services/api";
 import type { MoviesSearchResponse } from "../models/MoviesSearchResponse";
 import { Container } from "react-bootstrap";
 import MovieCardComponent from "../components/MovieCardComponent";

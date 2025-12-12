@@ -3,6 +3,8 @@ import type { MoviesSearchResponse } from "../models/MoviesSearchResponse";
 import type { Credits } from "../models/Credits";
 import type { Movie } from "../models/Movie";
 import type { Genre } from "../models/Genre";
+import type { MemberMovieCredits } from "../models/MoviesByPerson";
+import type { Person } from "../models/Person";
 
 const BASE_URL = "https://api.themoviedb.org/3";
 const API_KEY = import.meta.env.VITE_OWM_APIKEY;
@@ -25,7 +27,20 @@ export const getMovie = async (movieId: number) => {
   const result = await axios.get<Movie>(
     `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`
   );
-  console.log("Getting movie från EIPIAI");
+  return result.data;
+};
+
+export const getMoviesByPerson = async (castMemberId: number) => {
+  const result = await axios.get<MemberMovieCredits>(
+    `${BASE_URL}/person/${castMemberId}/movie_credits?api_key=${API_KEY}`
+  );
+  return result.data;
+};
+
+export const getPerson = async (id: number) => {
+  const result = await axios.get<Person>(
+    `${BASE_URL}/person/${id}?api_key=${API_KEY}`
+  );
   return result.data;
 };
 

@@ -15,6 +15,7 @@ export interface CrewMember {
   id: number;
   name: string;
   department: string;
+  job: string;
   profile_path: string;
   playedCharacter: string;
 }

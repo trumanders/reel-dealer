@@ -1,27 +1,43 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
-import { getAllGenres, getMovie, search } from "../services/api";
+import {
+  getAllGenres,
+  getMovie,
+  getMoviesByPerson,
+  search,
+} from "../services/api";
 import type { MoviesSearchResponse } from "../models/MoviesSearchResponse";
 import type { Movie } from "../models/Movie";
 import type { Genre } from "../models/Genre";
+import type { MoviesByPerson } from "../models/MoviesByPerson";
 
 interface MovieContextType {
   searchText: string;
   setSearchText: React.Dispatch<React.SetStateAction<string>>;
+
   error: string | null;
   setError: React.Dispatch<React.SetStateAction<string | null>>;
+
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+
+  movie: Movie | null;
+  setMovie: React.Dispatch<React.SetStateAction<Movie | null>>;
+
+  moviesByPerson: MoviesByPerson[];
+  setMoviesByPerson: React.Dispatch<React.SetStateAction<MoviesByPerson[]>>;
+
+  genres: Genre[];
+  setGenres: React.Dispatch<React.SetStateAction<Genre[]>>;
+
   searchResponse: MoviesSearchResponse | null;
   setSearchResponse: React.Dispatch<
     React.SetStateAction<MoviesSearchResponse | null>
   >;
   handleSearch: (searchText: string, page?: number) => void;
-  movie: Movie | null;
-  setMovie: React.Dispatch<React.SetStateAction<Movie | null>>;
+
   loadMovie: (movieId: number) => void;
-  genres: Genre[];
-  setGenres: React.Dispatch<React.SetStateAction<Genre[]>>;
+  loadMoviesByPerson: (castMemberId: number) => void;
 }
 
 interface TodosProviderProps {
@@ -37,6 +53,8 @@ export const MovieProvider = ({ children }: TodosProviderProps) => {
   const [searchResponse, setSearchResponse] =
     useState<MoviesSearchResponse | null>(null);
   const [movie, setMovie] = useState<Movie | null>(null);
+  const [moviesByPerson, setMoviesByPerson] = useState<MoviesByPerson[]>([]);
+
   const [genres, setGenres] = useState<Genre[]>([]);
 
   const handleSearch = async (searchText: string, page: number = 1) => {
@@ -48,6 +66,11 @@ export const MovieProvider = ({ children }: TodosProviderProps) => {
     const movieResult = await getMovie(movieId);
     console.log("loadMovie", movieResult);
     setMovie(movieResult);
+  };
+
+  const loadMoviesByPerson = async (castMemberId: number) => {
+    const result = await getMoviesByPerson(castMemberId);
+    setMoviesByPerson([result]);
   };
 
   useEffect(() => {
@@ -74,6 +97,9 @@ export const MovieProvider = ({ children }: TodosProviderProps) => {
         handleSearch,
         movie,
         setMovie,
+        moviesByPerson,
+        setMoviesByPerson,
+        loadMoviesByPerson,
         loadMovie,
         genres,
         setGenres,

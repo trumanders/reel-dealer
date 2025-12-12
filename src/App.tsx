@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import { Route, Routes } from "react-router";
 import { Container } from "react-bootstrap";
 import MoviePage from "./pages/MoviePage";
+import PersonPage from "./pages/PersonPage";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/search" element={<SearchResultsPage />} />
           <Route path="/movie/:id" element={<MoviePage />} />
+          <Route path="/person/:id" element={<PersonPage />} />
         </Routes>
       </Container>
     </>

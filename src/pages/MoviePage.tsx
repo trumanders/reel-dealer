@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useMovies } from "../contexts/MovieContext";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { useParams } from "react-router";
@@ -8,19 +8,19 @@ import MoviePageDetails from "../components/MoviePageDetails.tsx";
 const MoviePage = () => {
   const { id } = useParams();
   const movieId = id ? Number(id) : undefined;
-  const { movie, loadMovie, isLoading, setIsLoading } = useMovies();
+  const { movie, loadMovie, isLoading } = useMovies();
 
   useEffect(() => {
     if (!movie && movieId) {
-      setIsLoading(true);
       loadMovie(movieId);
-      setIsLoading(false);
     }
   }, [movieId, loadMovie, movie]);
 
   if (!movie) return;
 
-  return (
+  return isLoading ? (
+    <p>LOADING...</p>
+  ) : (
     <Container className="py-5 border-bottom movie-page-container">
       <MoviePageHeader movie={movie} />
       <MoviePageDetails movie={movie} />

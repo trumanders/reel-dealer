@@ -17,6 +17,7 @@ export const search = async (query: string, page: number = 1) => {
         api_key: API_KEY,
         query: query,
         page: page,
+        include_adult: false,
       },
     }
   );
@@ -24,15 +25,18 @@ export const search = async (query: string, page: number = 1) => {
 };
 
 export const getMovie = async (movieId: number) => {
-  const result = await axios.get<Movie>(
-    `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`
-  );
+  const result = await axios.get<Movie>(`${BASE_URL}/movie/${movieId}`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
   return result.data;
 };
 
 export const getMoviesByPerson = async (castMemberId: number) => {
   const result = await axios.get<MoviesByPerson>(
-    `${BASE_URL}/person/${castMemberId}/movie_credits?api_key=${API_KEY}`
+    `${BASE_URL}/person/${castMemberId}/movie_credits`,
+    { params: { api_key: API_KEY, id: castMemberId, include_adult: false } }
   );
   return result.data;
 };
@@ -46,21 +50,21 @@ export const getPerson = async (id: number) => {
 
 export const getNowPlaying = async (page: number = 1) => {
   const result = await axios.get<MoviesSearchResponse>(
-    `${BASE_URL}/movie/now_playing?api_key=${API_KEY}&page=${page}`
+    `${BASE_URL}/movie/now_playing?api_key=${API_KEY}&page=${page}&include_adult=false`
   );
   return result.data;
 };
 
 export const getTrendingToday = async (page: number = 1) => {
   const result = await axios.get<MoviesSearchResponse>(
-    `${BASE_URL}/trending/movie/day?api_key=${API_KEY}&page=${page}`
+    `${BASE_URL}/trending/movie/day?api_key=${API_KEY}&page=${page}&include_adult=false`
   );
   return result.data;
 };
 
 export const getTop = async (page: number = 1) => {
   const result = await axios.get<MoviesSearchResponse>(
-    `${BASE_URL}/movie/top_rated?api_key=${API_KEY}&page=${page}`
+    `${BASE_URL}/movie/top_rated?api_key=${API_KEY}&page=${page}&include_adult=false`
   );
   return result.data;
 };
@@ -68,7 +72,7 @@ export const getTop = async (page: number = 1) => {
 export const getMovieCredits = async (movieId: number) => {
   try {
     const result = await axios.get<Credits>(
-      `${BASE_URL}/movie/${movieId}/credits?api_key=${API_KEY}`
+      `${BASE_URL}/movie/${movieId}/credits?api_key=${API_KEY}&include_adult=false`
     );
 
     return result.data;
@@ -82,7 +86,7 @@ export const getMovieCredits = async (movieId: number) => {
 
 export const getAllGenres = async () => {
   const result = await axios.get<{ genres: Genre[] }>(
-    `${BASE_URL}/genre/movie/list?api_key=${API_KEY}`
+    `${BASE_URL}/genre/movie/list?api_key=${API_KEY}&include_adult=false`
   );
   return result.data.genres;
 };

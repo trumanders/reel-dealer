@@ -21,6 +21,12 @@ interface MovieContextType {
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 
+  isLoadingGenres: boolean;
+  setIsLoadingGenres: React.Dispatch<React.SetStateAction<boolean>>;
+
+  isLoadingMoviesByPerson: boolean;
+  setIsLoadingMoviesByPerson: React.Dispatch<React.SetStateAction<boolean>>;
+
   movie: Movie | null;
   setMovie: React.Dispatch<React.SetStateAction<Movie | null>>;
 
@@ -34,6 +40,7 @@ interface MovieContextType {
   setSearchResponse: React.Dispatch<
     React.SetStateAction<MoviesSearchResponse | null>
   >;
+
   handleSearch: (searchText: string, page?: number) => void;
 
   loadMovie: (movieId: number) => void;
@@ -50,6 +57,10 @@ export const MovieProvider = ({ children }: TodosProviderProps) => {
   const [searchText, setSearchText] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoadingGenres, setIsLoadingGenres] = useState<boolean>(false);
+  const [isLoadingMoviesByPerson, setIsLoadingMoviesByPerson] =
+    useState<boolean>(false);
+
   const [searchResponse, setSearchResponse] =
     useState<MoviesSearchResponse | null>(null);
   const [movie, setMovie] = useState<Movie | null>(null);
@@ -58,25 +69,33 @@ export const MovieProvider = ({ children }: TodosProviderProps) => {
   const [genres, setGenres] = useState<Genre[]>([]);
 
   const handleSearch = async (searchText: string, page: number = 1) => {
+    setIsLoading(true);
     const result = await search(searchText, page);
     setSearchResponse(result);
+    setIsLoading(false);
   };
 
   const loadMovie = async (movieId: number) => {
+    setIsLoading(true);
     const movieResult = await getMovie(movieId);
     console.log("loadMovie", movieResult);
     setMovie(movieResult);
+    setIsLoading(false);
   };
 
   const loadMoviesByPerson = async (castMemberId: number) => {
+    setIsLoadingMoviesByPerson(true);
     const result = await getMoviesByPerson(castMemberId);
     setMoviesByPerson([result]);
+    setIsLoadingMoviesByPerson(false);
   };
 
   useEffect(() => {
     const loadGenres = async () => {
+      setIsLoadingGenres(true);
       const fetchedGenres = await getAllGenres();
       setGenres(fetchedGenres);
+      setIsLoadingGenres(false);
     };
     loadGenres();
   }, []);
@@ -91,6 +110,10 @@ export const MovieProvider = ({ children }: TodosProviderProps) => {
         setError,
         isLoading,
         setIsLoading,
+        isLoadingGenres,
+        setIsLoadingGenres,
+        isLoadingMoviesByPerson,
+        setIsLoadingMoviesByPerson,
         searchResponse,
         setSearchResponse,
         setSearchText,

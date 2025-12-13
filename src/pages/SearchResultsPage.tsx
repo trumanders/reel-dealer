@@ -2,8 +2,12 @@ import MovieCardComponent from "../components/MovieCardComponent";
 import { useMovies } from "../contexts/MovieContext";
 
 const SearchResultsPage = () => {
+  const { isLoading } = useMovies();
   const { searchResponse } = useMovies();
-  return (
+
+  return isLoading ? (
+    <p>LOADING...</p>
+  ) : (
     <>
       <div className="searchResults">
         {searchResponse && searchResponse.results.length > 0 ? (

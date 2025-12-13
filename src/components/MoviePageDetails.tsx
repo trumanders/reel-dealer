@@ -57,7 +57,7 @@ const MoviePageDetails = ({ movie }: { movie: Movie }) => {
             <Col xs="auto">{hasMultipleWriters() ? "Writers" : "Writer"}</Col>
             <Col className="d-flex">
               {credits?.crew
-                .filter((crewMember) => crewMember.job === "Writer")
+                .filter((crewMember) => crewMember.department === "Writing")
                 .map((writer, index, writers) => (
                   <>
                     <NavLink key={writer.id} href="">
@@ -91,7 +91,7 @@ const MoviePageDetails = ({ movie }: { movie: Movie }) => {
             <Col className="d-flex">
               {credits?.cast.slice(0, 4).map((actor, index, actors) => (
                 <>
-                  <NavLink href="">{actor.name}</NavLink>
+                  <NavLink href={`/person/${actor.id}`}>{actor.name}</NavLink>
                   {addBulletSymbol(index, actors)}
                 </>
               ))}

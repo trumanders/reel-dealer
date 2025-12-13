@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
-import {
-  getAllGenres,
-  getNowPlaying,
-  getTop,
-  getTrendingToday,
-} from "../services/api";
+import { getNowPlaying, getTop, getTrendingToday } from "../services/api";
 import type { MoviesSearchResponse } from "../models/MoviesSearchResponse";
 import { Container } from "react-bootstrap";
 import MovieCardComponent from "../components/MovieCardComponent";
+import { useMovies } from "../contexts/MovieContext";
 
 interface CategoryProps {
   moviesInCategory: MoviesSearchResponse | null;
@@ -38,6 +34,8 @@ const HomePage = () => {
   );
   const [topRated, setTopRated] = useState<MoviesSearchResponse | null>(null);
 
+  const { isLoading } = useMovies();
+
   useEffect(() => {
     const fetchCategories = async () => {
       const nowPlaying = await getNowPlaying();
@@ -52,7 +50,17 @@ const HomePage = () => {
     fetchCategories();
   }, []);
 
-  return (
+  const isDataReady = () => {
+    return (
+      (nowPlaying?.results?.length ?? 0) > 0 &&
+      (trending?.results?.length ?? 0) > 0 &&
+      (topRated?.results?.length ?? 0) > 0
+    );
+  };
+
+  return !isDataReady() ? (
+    <p>LOADING...</p>
+  ) : (
     <Container className="categories-container">
       <Category moviesInCategory={nowPlaying} title="Now Playing" />
       <Category moviesInCategory={trending} title="Trending" />

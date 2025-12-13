@@ -44,6 +44,17 @@ const MoviePageDetails = ({ movie }: { movie: Movie }) => {
     return index < arr.length - 1 && <span>&nbsp;&nbsp;∙&nbsp;&nbsp;</span>;
   };
 
+  useEffect(() => {
+    const fetchCredits = async () => {
+      if (movie) {
+        const result = await getMovieCredits(movie.id);
+        setCredits(result);
+      }
+    };
+
+    fetchCredits();
+  }, [movie]);
+
   return (
     <div className="movie-page-details">
       <Row className="d-flex">
@@ -72,7 +83,17 @@ const MoviePageDetails = ({ movie }: { movie: Movie }) => {
           <Row>
             <Col xs="auto" className="d-flex">
               {hasMultipleDirectors() ? "Directors" : "Director"}
+              {hasMultipleDirectors() ? "Directors" : "Director"}
             </Col>
+            <Col className="d-flex">
+              {credits?.crew
+                .filter((crewMember) => crewMember.job === "Director")
+                .map((director, index, directors) => (
+                  <>
+                    <NavLink href="">{director.name}</NavLink>
+                    {addBulletSymbol(index, directors)}
+                  </>
+                ))}
             <Col className="d-flex">
               {credits?.crew
                 .filter((crewMember) => crewMember.job === "Director")
@@ -87,14 +108,10 @@ const MoviePageDetails = ({ movie }: { movie: Movie }) => {
           <Row>
             <Col xs="auto" className="d-flex">
               {hasMultipleActors() ? "Actors" : "Actor"}
+              {hasMultipleActors() ? "Actors" : "Actor"}
             </Col>
-            <Col className="d-flex">
-              {credits?.cast.slice(0, 4).map((actor, index, actors) => (
-                <>
-                  <NavLink href={`/person/${actor.id}`}>{actor.name}</NavLink>
-                  {addBulletSymbol(index, actors)}
-                </>
-              ))}
+            <Col>
+              <NavLink href="">Anders</NavLink>
             </Col>
           </Row>
         </Col>

@@ -3,7 +3,7 @@ import type { MoviesSearchResponse } from "../models/MoviesSearchResponse";
 import type { Credits } from "../models/Credits";
 import type { Movie } from "../models/Movie";
 import type { Genre } from "../models/Genre";
-import type { MoviesByPerson } from "../models/MoviesByPerson";
+import type { MovieCreditsByPerson } from "../models/MovieCreditsByPerson";
 import type { Person } from "../models/Person";
 
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -33,8 +33,8 @@ export const getMovie = async (movieId: number) => {
   return result.data;
 };
 
-export const getMoviesByPerson = async (castMemberId: number) => {
-  const result = await axios.get<MoviesByPerson>(
+export const getMovieCreditsByPerson = async (castMemberId: number) => {
+  const result = await axios.get<MovieCreditsByPerson>(
     `${BASE_URL}/person/${castMemberId}/movie_credits`,
     { params: { api_key: API_KEY, id: castMemberId, include_adult: false } }
   );

@@ -3,13 +3,13 @@ import type { ReactNode } from "react";
 import {
   getAllGenres,
   getMovie,
-  getMoviesByPerson,
+  // getCombinedCreditsByPerson,
   search,
 } from "../services/api";
 import type { MoviesSearchResponse } from "../models/MoviesSearchResponse";
 import type { Movie } from "../models/Movie";
 import type { Genre } from "../models/Genre";
-import type { MoviesByPerson } from "../models/MoviesByPerson";
+import type { MovieCreditsByPerson } from "../models/MovieCreditsByPerson";
 
 interface MovieContextType {
   searchText: string;
@@ -24,14 +24,18 @@ interface MovieContextType {
   isLoadingGenres: boolean;
   setIsLoadingGenres: React.Dispatch<React.SetStateAction<boolean>>;
 
-  isLoadingMoviesByPerson: boolean;
-  setIsLoadingMoviesByPerson: React.Dispatch<React.SetStateAction<boolean>>;
+  isLoadingCombinedCreditsByPerson: boolean;
+  setIsLoadingCombinedCreditsByPerson: React.Dispatch<
+    React.SetStateAction<boolean>
+  >;
 
   movie: Movie | null;
   setMovie: React.Dispatch<React.SetStateAction<Movie | null>>;
 
-  moviesByPerson: MoviesByPerson[];
-  setMoviesByPerson: React.Dispatch<React.SetStateAction<MoviesByPerson[]>>;
+  combinedCreditsByPerson: MovieCreditsByPerson[];
+  setCombinedCreditsByPerson: React.Dispatch<
+    React.SetStateAction<MovieCreditsByPerson[]>
+  >;
 
   genres: Genre[];
   setGenres: React.Dispatch<React.SetStateAction<Genre[]>>;
@@ -44,7 +48,7 @@ interface MovieContextType {
   handleSearch: (searchText: string, page?: number) => void;
 
   loadMovie: (movieId: number) => void;
-  loadMoviesByPerson: (castMemberId: number) => void;
+  // loadCombinedCreditsByPerson: (castMemberId: number) => void;
 }
 
 interface TodosProviderProps {
@@ -58,13 +62,17 @@ export const MovieProvider = ({ children }: TodosProviderProps) => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoadingGenres, setIsLoadingGenres] = useState<boolean>(false);
-  const [isLoadingMoviesByPerson, setIsLoadingMoviesByPerson] =
-    useState<boolean>(false);
+  const [
+    isLoadingCombinedCreditsByPerson,
+    setIsLoadingCombinedCreditsByPerson,
+  ] = useState<boolean>(false);
 
   const [searchResponse, setSearchResponse] =
     useState<MoviesSearchResponse | null>(null);
   const [movie, setMovie] = useState<Movie | null>(null);
-  const [moviesByPerson, setMoviesByPerson] = useState<MoviesByPerson[]>([]);
+  const [combinedCreditsByPerson, setCombinedCreditsByPerson] = useState<
+    MovieCreditsByPerson[]
+  >([]);
 
   const [genres, setGenres] = useState<Genre[]>([]);
 
@@ -83,12 +91,12 @@ export const MovieProvider = ({ children }: TodosProviderProps) => {
     setIsLoading(false);
   };
 
-  const loadMoviesByPerson = async (castMemberId: number) => {
-    setIsLoadingMoviesByPerson(true);
-    const result = await getMoviesByPerson(castMemberId);
-    setMoviesByPerson([result]);
-    setIsLoadingMoviesByPerson(false);
-  };
+  // const loadCombinedCreditsByPerson = async (castMemberId: number) => {
+  //   setIsLoadingCombinedCreditsByPerson(true);
+  //   const result = await getCombinedCreditsByPerson(castMemberId);
+  //   setCombinedCreditsByPerson([result]);
+  //   setIsLoadingCombinedCreditsByPerson(false);
+  // };
 
   useEffect(() => {
     const loadGenres = async () => {
@@ -112,17 +120,17 @@ export const MovieProvider = ({ children }: TodosProviderProps) => {
         setIsLoading,
         isLoadingGenres,
         setIsLoadingGenres,
-        isLoadingMoviesByPerson,
-        setIsLoadingMoviesByPerson,
+        isLoadingCombinedCreditsByPerson,
+        setIsLoadingCombinedCreditsByPerson,
         searchResponse,
         setSearchResponse,
         setSearchText,
         handleSearch,
         movie,
         setMovie,
-        moviesByPerson,
-        setMoviesByPerson,
-        loadMoviesByPerson,
+        combinedCreditsByPerson,
+        setCombinedCreditsByPerson,
+        // loadCombinedCreditsByPerson,
         loadMovie,
         genres,
         setGenres,

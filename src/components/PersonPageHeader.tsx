@@ -1,11 +1,23 @@
 import { Col, Row } from "react-bootstrap";
 import type { Person } from "../models/Person";
+import type { MovieCreditsByPerson } from "../models/MovieCreditsByPerson";
 
-const PersonPageHeader = ({ person }: { person: Person }) => {
-  const getRollByDepartment = (knownForDepartment: string, gender: number) => {
-    if (knownForDepartment === "Acting") {
-      return gender === 1 ? "Actor" : "Actress";
+const PersonPageHeader = ({
+  person,
+  movieCredits,
+}: {
+  person: Person;
+  movieCredits: MovieCreditsByPerson | null;
+}) => {
+  const getAllDepartments = Array.from(
+    new Set(movieCredits?.crew?.map((c) => c.department))
+  );
+
+  const addBulletSymbol = (departments: string[], index: number) => {
+    if (index < departments.length - 1) {
+      return <span>&nbsp;&nbsp;∙&nbsp;&nbsp;</span>;
     }
+    return null;
   };
 
   return (
@@ -14,28 +26,20 @@ const PersonPageHeader = ({ person }: { person: Person }) => {
         <Col>
           <h1>{person.name}</h1>
         </Col>
-        <Col xs="auto" className="d-flex gap-5">
-          {/* <div>
-            <div>RATING</div>
-            <div>⭐ {movie.vote_average.toFixed(1)}</div>
-            <div>{movie.vote_count} votes</div>
-          </div>
-          <div>
-            <div>POPULARITY</div>
-            <div>🔥 {movie.popularity}</div>
-          </div> */}
-        </Col>
       </Row>
 
-      <Row className="sub-title-text">
-        <Col>
-          {getRollByDepartment(person.known_for_department, person.gender)}
-        </Col>
-      </Row>
-
-      <Row className="sub-title-text">
+      <Row className="sub-title-text d-flex">
         <Col xs="auto">
-          {/* {movie.release_date.slice(0, 4)} • {movie.runtime} min */}
+          {movieCredits && movieCredits.cast.length > 0 && "Acting"}
+          {getAllDepartments.length > 0 && (
+            <span>&nbsp;&nbsp;∙&nbsp;&nbsp;</span>
+          )}
+          {getAllDepartments.map((department, index, departments) => (
+            <>
+              {department}
+              {addBulletSymbol(departments, index)}
+            </>
+          ))}
         </Col>
       </Row>
     </div>

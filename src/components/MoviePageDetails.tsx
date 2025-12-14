@@ -26,7 +26,10 @@ const MoviePageDetails = ({ movie }: { movie: Movie }) => {
   const cast = credits?.cast?.slice(0, 4);
 
   const addBulletSymbol = (index: number, arr: CrewMember[] | CastMember[]) => {
-    return index < arr.length - 1 && <span>&nbsp;&nbsp;∙&nbsp;&nbsp;</span>;
+    if (index < arr.length - 1) {
+      return <span>&nbsp;&nbsp;∙&nbsp;&nbsp;</span>;
+    }
+    return null;
   };
 
   useEffect(() => {

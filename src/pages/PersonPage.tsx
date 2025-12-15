@@ -7,6 +7,7 @@ import PersonPageHeader from "../components/PersonPageHeader.tsx";
 import PersonPageDetails from "../components/PersonPageDetails.tsx";
 import type { MovieCreditsByPerson } from "../models/MovieCreditsByPerson.ts";
 import type { TvCreditsByPerson } from "../models/TvCreditsByPerson.tsx";
+import type { Credits } from "../models/Credits.ts";
 
 const PersonPage = () => {
   const { id } = useParams();
@@ -17,9 +18,7 @@ const PersonPage = () => {
   const [isLoadingTvCredits, setIsLoadingTvCredits] = useState(false);
 
   const [person, setPerson] = useState<Person | null>(null);
-  const [movieCredits, setMovieCredits] = useState<MovieCreditsByPerson | null>(
-    null
-  );
+  const [movieCredits, setMovieCredits] = useState<Credits | null>(null);
   const [tvCredits, setTvCredits] = useState<TvCreditsByPerson | null>(null);
 
   useEffect(() => {

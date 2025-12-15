@@ -5,6 +5,7 @@ import type { Movie } from "../models/Movie";
 import type { Genre } from "../models/Genre";
 import type { MovieCreditsByPerson } from "../models/MovieCreditsByPerson";
 import type { Person } from "../models/Person";
+import type { TvCreditsByPerson } from "../models/TvCreditsByPerson";
 
 const BASE_URL = "https://api.themoviedb.org/3";
 const API_KEY = import.meta.env.VITE_OWM_APIKEY;
@@ -33,10 +34,18 @@ export const getMovie = async (movieId: number) => {
   return result.data;
 };
 
-export const getMovieCreditsByPerson = async (castMemberId: number) => {
+export const getMovieCreditsByPerson = async (personId: number) => {
   const result = await axios.get<MovieCreditsByPerson>(
-    `${BASE_URL}/person/${castMemberId}/movie_credits`,
-    { params: { api_key: API_KEY, id: castMemberId, include_adult: false } }
+    `${BASE_URL}/person/${personId}/movie_credits`,
+    { params: { api_key: API_KEY, include_adult: false } }
+  );
+  return result.data;
+};
+
+export const getTvCreditsByPerson = async (personId: number) => {
+  const result = await axios.get<TvCreditsByPerson>(
+    `${BASE_URL}/person/${personId}/tv_credits`,
+    { params: { api_key: API_KEY, include_adult: false } }
   );
   return result.data;
 };

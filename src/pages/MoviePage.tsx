@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useMovies } from "../contexts/MovieContext";
 import { Button, Col, Container, Row } from "react-bootstrap";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import MoviePageHeader from "../components/MoviePageHeader.tsx";
 import MoviePageDetails from "../components/MoviePageDetails.tsx";
 
@@ -11,10 +11,10 @@ const MoviePage = () => {
   const { movie, loadMovie, isLoading } = useMovies();
 
   useEffect(() => {
-    if (!movie && movieId) {
+    if (movieId) {
       loadMovie(movieId);
     }
-  }, [movieId, loadMovie, movie]);
+  }, [movieId, loadMovie]);
 
   if (!movie) return;
 

@@ -45,7 +45,10 @@ export const getPerson = async (id: number) => {
   const result = await axios.get<Person>(
     `${BASE_URL}/person/${id}?api_key=${API_KEY}`
   );
-  return result.data;
+  // return result.data;
+  return new Promise<Person>((resolve) => {
+    setTimeout(() => resolve(result.data), 2000); // 2s delay
+  });
 };
 
 export const getNowPlaying = async (page: number = 1) => {

@@ -24,18 +24,18 @@ interface MovieContextType {
   isLoadingGenres: boolean;
   setIsLoadingGenres: React.Dispatch<React.SetStateAction<boolean>>;
 
-  isLoadingCombinedCreditsByPerson: boolean;
-  setIsLoadingCombinedCreditsByPerson: React.Dispatch<
-    React.SetStateAction<boolean>
-  >;
+  // isLoadingCombinedCreditsByPerson: boolean;
+  // setIsLoadingCombinedCreditsByPerson: React.Dispatch<
+  //   React.SetStateAction<boolean>
+  // >;
 
   movie: Movie | null;
   setMovie: React.Dispatch<React.SetStateAction<Movie | null>>;
 
-  combinedCreditsByPerson: MovieCreditsByPerson[];
-  setCombinedCreditsByPerson: React.Dispatch<
-    React.SetStateAction<MovieCreditsByPerson[]>
-  >;
+  // combinedCreditsByPerson: MovieCreditsByPerson[];
+  // setCombinedCreditsByPerson: React.Dispatch<
+  //   React.SetStateAction<MovieCreditsByPerson[]>
+  // >;
 
   genres: Genre[];
   setGenres: React.Dispatch<React.SetStateAction<Genre[]>>;
@@ -62,17 +62,17 @@ export const MovieProvider = ({ children }: TodosProviderProps) => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoadingGenres, setIsLoadingGenres] = useState<boolean>(false);
-  const [
-    isLoadingCombinedCreditsByPerson,
-    setIsLoadingCombinedCreditsByPerson,
-  ] = useState<boolean>(false);
+  // const [
+  //   isLoadingCombinedCreditsByPerson,
+  //   setIsLoadingCombinedCreditsByPerson,
+  // ] = useState<boolean>(false);
 
   const [searchResponse, setSearchResponse] =
     useState<MoviesSearchResponse | null>(null);
   const [movie, setMovie] = useState<Movie | null>(null);
-  const [combinedCreditsByPerson, setCombinedCreditsByPerson] = useState<
-    MovieCreditsByPerson[]
-  >([]);
+  // const [combinedCreditsByPerson, setCombinedCreditsByPerson] = useState<
+  //   MovieCreditsByPerson[]
+  // >([]);
 
   const [genres, setGenres] = useState<Genre[]>([]);
 
@@ -120,16 +120,16 @@ export const MovieProvider = ({ children }: TodosProviderProps) => {
         setIsLoading,
         isLoadingGenres,
         setIsLoadingGenres,
-        isLoadingCombinedCreditsByPerson,
-        setIsLoadingCombinedCreditsByPerson,
+        // isLoadingCombinedCreditsByPerson,
+        // setIsLoadingCombinedCreditsByPerson,
         searchResponse,
         setSearchResponse,
         setSearchText,
         handleSearch,
         movie,
         setMovie,
-        combinedCreditsByPerson,
-        setCombinedCreditsByPerson,
+        // combinedCreditsByPerson,
+        // setCombinedCreditsByPerson,
         // loadCombinedCreditsByPerson,
         loadMovie,
         genres,

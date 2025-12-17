@@ -47,6 +47,7 @@ export const getTvCreditsByPerson = async (personId: number) => {
     `${BASE_URL}/person/${personId}/tv_credits`,
     { params: { api_key: API_KEY, include_adult: false } }
   );
+  console.log("API RESULT: ", result.data);
   return result.data;
 };
 

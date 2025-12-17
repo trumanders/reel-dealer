@@ -30,11 +30,17 @@ body {
 .movie-card {
   cursor: pointer;
   color: white;
-  width: 14rem;
-  height: 40rem;
+  width: 12rem;
+  height: 25rem;
   background-color: rgb(31, 31, 31);
   border-style: none;
   border-radius: 10px;
+  .card-text {
+    font-size: small;
+  }
+  .card-title {
+    font-size: medium;
+  }
 }
 
 .sub-title-text {

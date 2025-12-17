@@ -27,7 +27,7 @@ const MovieCardComponent: React.FC<MovieCardProps> = ({ movie }) => {
       />
       <Card.Body>
         <div className="rating">
-          <Card.Text>Rating: {movie.vote_average}</Card.Text>
+          <Card.Text>⭐ {movie.vote_average.toFixed(1)}</Card.Text>
         </div>
         <Card.Title>{movie.title}</Card.Title>
       </Card.Body>

@@ -16,7 +16,7 @@ const MoviePageHeader = ({ movie }: { movie: Movie }) => {
           </div>
           <div>
             <div>POPULARITY</div>
-            <div>🔥 {movie.popularity}</div>
+            <div>🔥 {movie.popularity.toFixed(0)}</div>
           </div>
         </Col>
       </Row>

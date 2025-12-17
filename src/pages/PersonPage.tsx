@@ -1,24 +1,29 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { getMovieCredits, getPerson } from "../services/api.ts";
+import {
+  getPerson,
+  getMovieCreditsByPerson,
+  getTvCreditsByPerson,
+} from "../services/api.ts";
 import type { Person } from "../models/Person.ts";
 import { Container } from "react-bootstrap";
 import PersonPageHeader from "../components/PersonPageHeader.tsx";
 import PersonPageDetails from "../components/PersonPageDetails.tsx";
 import type { MovieCreditsByPerson } from "../models/MovieCreditsByPerson.ts";
 import type { TvCreditsByPerson } from "../models/TvCreditsByPerson.tsx";
-import type { Credits } from "../models/Credits.ts";
 
 const PersonPage = () => {
   const { id } = useParams();
   const personId = id ? Number(id) : undefined;
 
   const [isLoadingPerson, setIsLoadingPerson] = useState(false);
-  const [isLoadingCredits, setIsLoadingCredits] = useState(false);
+  const [isLoadingMovieCredits, setIsLoadingMovieCredits] = useState(false);
   const [isLoadingTvCredits, setIsLoadingTvCredits] = useState(false);
 
   const [person, setPerson] = useState<Person | null>(null);
-  const [movieCredits, setMovieCredits] = useState<Credits | null>(null);
+  const [movieCredits, setMovieCredits] = useState<MovieCreditsByPerson | null>(
+    null
+  );
   const [tvCredits, setTvCredits] = useState<TvCreditsByPerson | null>(null);
 
   useEffect(() => {
@@ -33,28 +38,28 @@ const PersonPage = () => {
 
     const loadMovieCredits = async () => {
       if (personId) {
-        setIsLoadingCredits(true);
-        const movieCredits = await getMovieCredits(personId);
-        setMovieCredits(movieCredits);
-        setIsLoadingCredits(false);
+        setIsLoadingMovieCredits(true);
+        const fetchedCredits = await getMovieCreditsByPerson(personId);
+        setMovieCredits(fetchedCredits);
+        setIsLoadingMovieCredits(false);
       }
     };
 
     const loadTvCredits = async () => {
       if (personId) {
         setIsLoadingTvCredits(true);
-        const tvCredits = await getTvCreditsByPerson(personId);
-        setTvCredits(tvCredits);
+        const fetchedTvCredits = await getTvCreditsByPerson(personId);
+        setTvCredits(fetchedTvCredits);
         setIsLoadingTvCredits(false);
       }
     };
 
     loadPerson();
     loadMovieCredits();
-    loadTvCredits;
+    loadTvCredits();
   }, [personId]);
 
-  if (isLoadingPerson || isLoadingCredits || isLoadingTvCredits) {
+  if (isLoadingPerson || isLoadingMovieCredits || isLoadingTvCredits) {
     return <p>LOADING...</p>;
   }
 
@@ -62,8 +67,16 @@ const PersonPage = () => {
 
   return (
     <Container className="py-5 border-bottom movie-page-container">
-      <PersonPageHeader person={person} movieCredits={movieCredits} />
-      <PersonPageDetails person={person} movieCredits={movieCredits} />
+      <PersonPageHeader
+        person={person}
+        movieCredits={movieCredits}
+        tvCredits={tvCredits}
+      />
+      <PersonPageDetails
+        person={person}
+        movieCredits={movieCredits}
+        tvCredits={tvCredits}
+      />
     </Container>
   );
 };

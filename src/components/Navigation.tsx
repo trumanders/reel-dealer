@@ -1,7 +1,6 @@
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import { NavLink, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Search from "./Search";
 
 const Navigation = () => {
@@ -13,19 +12,7 @@ const Navigation = () => {
         </Navbar.Brand>
         <Search />
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
-            <Nav.Link as={NavLink} to="/">
-              HEJ
-            </Nav.Link>
-            <Nav.Link as={NavLink} to="/" end>
-              DIN
-            </Nav.Link>
-            <Nav.Link as={NavLink} to="/" end>
-              GOING
-            </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
+        <Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
       </Container>
     </Navbar>
   );

@@ -40,8 +40,9 @@ const HomePage = () => {
   return !isDataReady() ? (
     <p>LOADING...</p>
   ) : (
-    <Container className="categories-container">
+    <Container className="movie-list-container">
       <MovieList
+        className="category"
         movies={nowPlaying?.results ?? null}
         title="Now Playing"
         renderMovie={(movie) => (
@@ -51,6 +52,7 @@ const HomePage = () => {
         )}
       />
       <MovieList
+        className="category"
         movies={trending?.results ?? null}
         title="Trending"
         renderMovie={(movie) => (
@@ -60,6 +62,7 @@ const HomePage = () => {
         )}
       />
       <MovieList
+        className="category"
         movies={topRated?.results ?? null}
         title="Top Rated"
         renderMovie={(movie) => (

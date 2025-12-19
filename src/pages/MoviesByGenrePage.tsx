@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import type { Movie } from "../models/Movie";
 import { getMoviesByGenre } from "../services/api";
 import { useParams, useLocation } from "react-router";
 import type { SearchMovie } from "../models/SearchMovie";
-import { Container } from "react-bootstrap";
+import { Container, Pagination } from "react-bootstrap";
 import MovieList from "../components/MovieList";
 import { useMovies } from "../contexts/MovieContext";
 import MovieCardComponent from "../components/MovieCardComponent";
+import { useNavigate } from "react-router-dom";
+import PaginationComponent from "../components/PaginationComponent";
 
-const MoviesByGenre = () => {
+const MoviesByGenrePage = () => {
   const { genres } = useMovies();
   const [moviesInGenre, setMoviesInGenre] = useState<SearchMovie[]>();
   const [page, setPage] = useState<number | null>(0);
@@ -16,6 +17,7 @@ const MoviesByGenre = () => {
   const genreId = id ? Number(id) : undefined;
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -24,6 +26,7 @@ const MoviesByGenre = () => {
     const fetchMoviesInGenre = async () => {
       if (genreId) {
         const response = await getMoviesByGenre(genreId, page);
+        console.log("Fetched page: ", page);
         setMoviesInGenre(response.results);
       }
     };
@@ -34,8 +37,9 @@ const MoviesByGenre = () => {
   console.log("Movies in genre:", moviesInGenre);
 
   return (
-    <Container className="categories-container">
+    <Container className="movie-list-container">
       <MovieList
+        className="movies-by-genre"
         movies={moviesInGenre ?? null}
         title={genres.find((g) => g.id === genreId)?.name || "Movies"}
         renderMovie={(movie) => (
@@ -44,8 +48,9 @@ const MoviesByGenre = () => {
           </div>
         )}
       />
+      <PaginationComponent />
     </Container>
   );
 };
 
-export default MoviesByGenre;
+export default MoviesByGenrePage;

@@ -17,14 +17,12 @@ const Search = () => {
   };
 
   return (
-    <div id="search-wrapper">
+    <div className="d-flex align-items-center">
       <Form id="search-form" onSubmit={(e) => onSearch(e)}>
         <InputGroup className="mb-3">
           <Form.Control
             type="text"
             placeholder="Search movies..."
-            aria-label="City"
-            aria-details="Search for city to show current weather for."
             value={searchText}
             onChange={(e) => handleSearchTextChange(e.target.value)}
           />

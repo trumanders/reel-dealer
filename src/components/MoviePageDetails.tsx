@@ -1,7 +1,7 @@
 import { Col, NavLink, Row } from "react-bootstrap";
 import type { Movie } from "../models/Movie";
 import { MOVIE_PAGE_IMAGE_BASE_URL } from "../constants/config";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { CastMember, Credits, CrewMember } from "../models/Credits";
 import { getMovieCredits } from "../services/api";
 
@@ -20,9 +20,7 @@ const MoviePageDetails = ({ movie }: { movie: Movie }) => {
   }, [movie]);
 
   const writers = credits?.crew?.filter((c) => c.department === "Writing");
-
   const directors = credits?.crew?.filter((c) => c.job === "Director");
-
   const cast = credits?.cast?.slice(0, 4);
 
   const addBulletSymbol = (index: number, arr: CrewMember[] | CastMember[]) => {
@@ -51,18 +49,17 @@ const MoviePageDetails = ({ movie }: { movie: Movie }) => {
         </Col>
         <Col>
           <p>{movie.overview}</p>
-
           {writers && writers.length > 0 && (
             <Row>
               <Col xs="auto">{writers.length > 1 ? "Writers" : "Writer"}</Col>
               <Col className="d-flex">
                 {writers?.map((writer, index, writers) => (
-                  <>
-                    <NavLink key={writer.id} href={`/person/${writer.id}`}>
+                  <React.Fragment key={writer.id}>
+                    <NavLink href={`/person/${writer.id}`}>
                       {writer.name}
                     </NavLink>
                     {addBulletSymbol(index, writers)}
-                  </>
+                  </React.Fragment>
                 ))}
               </Col>
             </Row>
@@ -75,12 +72,12 @@ const MoviePageDetails = ({ movie }: { movie: Movie }) => {
               </Col>
               <Col className="d-flex">
                 {directors?.map((director, index, directors) => (
-                  <>
+                  <React.Fragment key={director.id}>
                     <NavLink href={`/person/${director.id}`}>
                       {director.name}
                     </NavLink>
                     {addBulletSymbol(index, directors)}
-                  </>
+                  </React.Fragment>
                 ))}
               </Col>
             </Row>
@@ -93,10 +90,10 @@ const MoviePageDetails = ({ movie }: { movie: Movie }) => {
               </Col>
               <Col className="d-flex">
                 {cast?.map((actor, index, actors) => (
-                  <>
+                  <React.Fragment key={actor.id}>
                     <NavLink href={`/person/${actor.id}`}>{actor.name}</NavLink>
                     {addBulletSymbol(index, actors)}
-                  </>
+                  </React.Fragment>
                 ))}
               </Col>
             </Row>

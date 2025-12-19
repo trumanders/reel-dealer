@@ -8,7 +8,7 @@ import type { SearchMovie } from "../models/SearchMovie";
 const Genres = () => {
   const navigate = useNavigate();
   const { genres } = useMovies();
-  const [moviesByGenre, setMoviesByGenre] = useState<SearchMovie[][] | null>();
+  const [moviesByGenre, setMoviesByGenre] = useState<SearchMovie[][]>([]);
 
   useEffect(() => {
     const loadGenresMovies = async () => {
@@ -20,7 +20,7 @@ const Genres = () => {
     };
 
     loadGenresMovies();
-  }, []);
+  }, [genres]);
 
   const handleSelectedGenre = (genreId: number) => {
     navigate(`/genres/${genreId}`);
@@ -30,6 +30,7 @@ const Genres = () => {
     <>
       {genres.map((genre, index) => (
         <GenreCard
+          key={genre.id}
           genreId={genre.id}
           genreName={genre.name}
           moviePosters={

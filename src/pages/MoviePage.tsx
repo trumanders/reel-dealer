@@ -4,11 +4,13 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import MoviePageHeader from "../components/MoviePageHeader.tsx";
 import MoviePageDetails from "../components/MoviePageDetails.tsx";
+import { useNavigate } from "react-router-dom";
 
 const MoviePage = () => {
   const { id } = useParams();
   const movieId = id ? Number(id) : undefined;
   const { movie, loadMovie, isLoading } = useMovies();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (movieId) {
@@ -33,6 +35,9 @@ const MoviePage = () => {
                 key={genre.id}
                 className="genre-button"
                 variant="outline-light"
+                onClick={() => {
+                  navigate(`/genres/${genre.id}`);
+                }}
               >
                 {genre.name}
               </Button>

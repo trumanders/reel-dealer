@@ -6,6 +6,7 @@ import type { Genre } from "../models/Genre";
 import type { MovieCreditsByPerson } from "../models/MovieCreditsByPerson";
 import type { Person } from "../models/Person";
 import type { TvCreditsByPerson } from "../models/TvCreditsByPerson";
+import type { DiscoverMoviesResponse } from "../models/DiscoverMovie";
 
 const BASE_URL = "https://api.themoviedb.org/3";
 const API_KEY = import.meta.env.VITE_OWM_APIKEY;
@@ -102,4 +103,20 @@ export const getAllGenres = async () => {
     `${BASE_URL}/genre/movie/list?api_key=${API_KEY}&include_adult=false`
   );
   return result.data.genres;
+};
+
+export const getMoviesByGenre = async (genreId: number, page = 1) => {
+  const result = await axios.get<DiscoverMoviesResponse>(
+    `${BASE_URL}/discover/movie`,
+    {
+      params: {
+        api_key: API_KEY,
+        with_genres: genreId,
+        sort_by: "popularity.desc",
+        page: page,
+        include_adult: false,
+      },
+    }
+  );
+  return result.data;
 };

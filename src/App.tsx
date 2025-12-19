@@ -6,6 +6,8 @@ import { Route, Routes } from "react-router";
 import { Container } from "react-bootstrap";
 import MoviePage from "./pages/MoviePage";
 import PersonPage from "./pages/PersonPage";
+import Genres from "./pages/GenresPage";
+import MoviesByGenre from "./pages/MoviesByGenrePage";
 
 const App = () => {
   return (
@@ -17,6 +19,8 @@ const App = () => {
           <Route path="/search" element={<SearchResultsPage />} />
           <Route path="/movie/:id" element={<MoviePage />} />
           <Route path="/person/:id" element={<PersonPage />} />
+          <Route path="/genres" element={<Genres />} />
+          <Route path="/genres/:id" element={<MoviesByGenre />} />
         </Routes>
       </Container>
     </>

@@ -1,31 +1,20 @@
-import {
-  Accordion,
-  AccordionBody,
-  Badge,
-  Col,
-  ListGroup,
-  Row,
-} from "react-bootstrap";
+import { Accordion, AccordionBody, Col, ListGroup, Row } from "react-bootstrap";
 import type { Person } from "../models/Person";
 import type { MovieCreditsByPerson } from "../models/MovieCreditsByPerson";
 import { MOVIE_PAGE_IMAGE_BASE_URL } from "../constants/config";
 import { useNavigate } from "react-router";
-import type { TvCreditsByPerson } from "../models/TvCreditsByPerson";
 import type { CastMovieCredits } from "../models/CastMovieCredits";
 import type { CrewMovieCredits } from "../models/CrewMovieCredits";
-import type { CastTvCredits } from "../models/CastTvCredits";
-import type { CrewTvCredits } from "../models/CrewTvCredits";
 
-interface MovieTvListProps {
+interface MovieListProps {
   department: string;
   movies: CastMovieCredits[] | CrewMovieCredits[] | null;
-  tv: CastTvCredits[] | CrewTvCredits[] | null;
 }
 
-const MovieTvList: React.FC<MovieTvListProps> = ({
+const MovieList: React.FC<MovieListProps> = ({
   department,
   movies,
-  tv,
+  // tv,
 }) => {
   const navigate = useNavigate();
 
@@ -39,14 +28,9 @@ const MovieTvList: React.FC<MovieTvListProps> = ({
       {movies && movies.length > 0 && (
         <Accordion>
           <Accordion.Item eventKey="movies">
-            <Accordion.Header>
-              Movies
-              <Badge bg="light" text="dark" className="ms-2">
-                {movies.length}
-              </Badge>
-            </Accordion.Header>
+            <Accordion.Header>{` ${movies.length} Movies`}</Accordion.Header>
             <AccordionBody>
-              <ListGroup variant="flush">
+              <ListGroup variant="stream">
                 {movies.map((movie) => (
                   <ListGroup.Item
                     key={movie.id}
@@ -63,33 +47,6 @@ const MovieTvList: React.FC<MovieTvListProps> = ({
           </Accordion.Item>
         </Accordion>
       )}
-      {tv && tv.length > 0 && (
-        <Accordion>
-          <Accordion.Item eventKey="tv">
-            <Accordion.Header>
-              Series
-              <Badge bg="light" text="dark" className="ms-2">
-                {tv.length}
-              </Badge>
-            </Accordion.Header>
-            <AccordionBody>
-              <ListGroup variant="flush">
-                {tv.map((tv) => (
-                  <ListGroup.Item
-                    key={tv.id}
-                    className="d-flex align-items-center"
-                    onClick={() => handleMovieListClick(tv.id)}
-                  >
-                    <img
-                      src={`${MOVIE_PAGE_IMAGE_BASE_URL}${tv.poster_path}`}
-                    ></img>
-                  </ListGroup.Item>
-                ))}
-              </ListGroup>
-            </AccordionBody>
-          </Accordion.Item>
-        </Accordion>
-      )}
     </div>
   );
 };
@@ -97,14 +54,11 @@ const MovieTvList: React.FC<MovieTvListProps> = ({
 const PersonPageDetails = ({
   person,
   movieCredits,
-  tvCredits,
 }: {
   person: Person;
   movieCredits: MovieCreditsByPerson | null;
-  tvCredits: TvCreditsByPerson | null;
 }) => {
   const actingCreditMovies = movieCredits?.cast ?? [];
-  const actingCreditTv = tvCredits?.cast ?? [];
 
   const moviesByCrewDepartment: Record<string, CrewMovieCredits[]> = (
     movieCredits?.crew ?? []
@@ -114,16 +68,6 @@ const PersonPageDetails = ({
     acc[dept].push(movie);
     return acc;
   }, {});
-
-  const tvByCrewDepartment = tvCredits?.crew.reduce(
-    (acc: Record<string, CrewTvCredits[]>, movie) => {
-      const dept = movie.department ?? "Unknown";
-      acc[dept] ??= [];
-      acc[dept].push(movie);
-      return acc;
-    },
-    {}
-  );
 
   return (
     <div className="movie-page-details">
@@ -136,19 +80,14 @@ const PersonPageDetails = ({
         </Col>
       </Row>
       <Row>
-        <MovieTvList
+        <MovieList
           department="Acting"
           movies={actingCreditMovies}
-          tv={actingCreditTv}
+          // tv={actingCreditTv}
         />
 
         {Object.entries(moviesByCrewDepartment).map(([dept, movies]) => (
-          <MovieTvList
-            // key={dept}
-            department={dept}
-            movies={movies}
-            tv={tvByCrewDepartment?.[dept] ?? []}
-          />
+          <MovieList key={dept} department={dept} movies={movies} />
         ))}
       </Row>
     </div>

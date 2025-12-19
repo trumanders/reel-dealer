@@ -14,7 +14,7 @@ const SearchResultsPage = () => {
           <div>
             {searchResponse.results.map((movie) => (
               <div key={movie.id}>
-                <MovieCardComponent movie={movie} />
+                <MovieCardComponent searchMovie={movie} />
               </div>
             ))}
           </div>

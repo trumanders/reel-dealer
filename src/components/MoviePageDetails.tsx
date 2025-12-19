@@ -19,9 +19,23 @@ const MoviePageDetails = ({ movie }: { movie: Movie }) => {
     fetchCredits();
   }, [movie]);
 
-  const writers = credits?.crew?.filter((c) => c.department === "Writing");
-  const directors = credits?.crew?.filter((c) => c.job === "Director");
-  const cast = credits?.cast?.slice(0, 4);
+  const uniqueWriters = Array.from(
+    new Map(
+      credits?.crew
+        ?.filter((c) => c.department === "Writing")
+        .map((w) => [w.id, w])
+    ).values()
+  );
+
+  const uniqueDirectors = Array.from(
+    new Map(
+      credits?.crew?.filter((c) => c.job === "Director").map((d) => [d.id, d])
+    ).values()
+  );
+
+  const uniqueCast = Array.from(
+    new Map((credits?.cast?.slice(0, 4) ?? []).map((a) => [a.id, a])).values()
+  );
 
   const addBulletSymbol = (index: number, arr: CrewMember[] | CastMember[]) => {
     if (index < arr.length - 1) {
@@ -49,11 +63,13 @@ const MoviePageDetails = ({ movie }: { movie: Movie }) => {
         </Col>
         <Col>
           <p>{movie.overview}</p>
-          {writers && writers.length > 0 && (
+          {uniqueWriters && uniqueWriters.length > 0 && (
             <Row>
-              <Col xs="auto">{writers.length > 1 ? "Writers" : "Writer"}</Col>
+              <Col xs="auto">
+                {uniqueWriters.length > 1 ? "Writers" : "Writer"}
+              </Col>
               <Col className="d-flex">
-                {writers?.map((writer, index, writers) => (
+                {uniqueWriters?.map((writer, index, writers) => (
                   <React.Fragment key={writer.id}>
                     <NavLink href={`/person/${writer.id}`}>
                       {writer.name}
@@ -65,13 +81,13 @@ const MoviePageDetails = ({ movie }: { movie: Movie }) => {
             </Row>
           )}
 
-          {directors && directors.length > 0 && (
+          {uniqueDirectors && uniqueDirectors.length > 0 && (
             <Row>
               <Col xs="auto" className="d-flex">
-                {directors.length > 1 ? "Directors" : "Director"}
+                {uniqueDirectors.length > 1 ? "Directors" : "Director"}
               </Col>
               <Col className="d-flex">
-                {directors?.map((director, index, directors) => (
+                {uniqueDirectors?.map((director, index, directors) => (
                   <React.Fragment key={director.id}>
                     <NavLink href={`/person/${director.id}`}>
                       {director.name}
@@ -83,13 +99,13 @@ const MoviePageDetails = ({ movie }: { movie: Movie }) => {
             </Row>
           )}
 
-          {cast && cast.length > 0 && (
+          {uniqueCast && uniqueCast.length > 0 && (
             <Row>
               <Col xs="auto" className="d-flex">
-                {cast.length > 1 ? "Actors" : "Actor"}
+                {uniqueCast.length > 1 ? "Actors" : "Actor"}
               </Col>
               <Col className="d-flex">
-                {cast?.map((actor, index, actors) => (
+                {uniqueCast?.map((actor, index, actors) => (
                   <React.Fragment key={actor.id}>
                     <NavLink href={`/person/${actor.id}`}>{actor.name}</NavLink>
                     {addBulletSymbol(index, actors)}

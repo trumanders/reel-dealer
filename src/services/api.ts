@@ -5,7 +5,7 @@ import type { Movie } from "../models/Movie";
 import type { Genre } from "../models/Genre";
 import type { MovieCreditsByPerson } from "../models/MovieCreditsByPerson";
 import type { Person } from "../models/Person";
-import type { TvCreditsByPerson } from "../models/TvCreditsByPerson";
+// import type { TvCreditsByPerson } from "../models/TvCreditsByPerson";
 import type { DiscoverMoviesResponse } from "../models/DiscoverMovieResponse";
 
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -43,14 +43,14 @@ export const getMovieCreditsByPerson = async (personId: number) => {
   return result.data;
 };
 
-export const getTvCreditsByPerson = async (personId: number) => {
-  const result = await axios.get<TvCreditsByPerson>(
-    `${BASE_URL}/person/${personId}/tv_credits`,
-    { params: { api_key: API_KEY, include_adult: false } }
-  );
-  console.log("API RESULT: ", result.data);
-  return result.data;
-};
+// export const getTvCreditsByPerson = async (personId: number) => {
+//   const result = await axios.get<TvCreditsByPerson>(
+//     `${BASE_URL}/person/${personId}/tv_credits`,
+//     { params: { api_key: API_KEY, include_adult: false } }
+//   );
+//   console.log("API RESULT: ", result.data);
+//   return result.data;
+// };
 
 export const getPerson = async (id: number) => {
   const result = await axios.get<Person>(

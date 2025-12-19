@@ -8,11 +8,14 @@ import { useMovies } from "../contexts/MovieContext";
 import MovieCardComponent from "../components/MovieCardComponent";
 import { useNavigate } from "react-router-dom";
 import PaginationComponent from "../components/PaginationComponent";
+import type { DiscoverMoviesResponse } from "../models/DiscoverMovieResponse";
 
 const MoviesByGenrePage = () => {
   const { genres } = useMovies();
+  const [discoverMoviesResponse, setDiscoverMoviesResponse] =
+    useState<DiscoverMoviesResponse | null>(null);
   const [moviesInGenre, setMoviesInGenre] = useState<SearchMovie[]>();
-  const [page, setPage] = useState<number | null>(0);
+  const [page, setPage] = useState<number>(1);
   const { id } = useParams();
   const genreId = id ? Number(id) : undefined;
 
@@ -22,11 +25,12 @@ const MoviesByGenrePage = () => {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const page = Number(params.get("page") || 1);
+    setPage(page);
 
     const fetchMoviesInGenre = async () => {
       if (genreId) {
         const response = await getMoviesByGenre(genreId, page);
-        console.log("Fetched page: ", page);
+        setDiscoverMoviesResponse(response);
         setMoviesInGenre(response.results);
       }
     };
@@ -34,7 +38,13 @@ const MoviesByGenrePage = () => {
     fetchMoviesInGenre();
   }, [genreId, location.search]);
 
-  console.log("Movies in genre:", moviesInGenre);
+  const handlePageClick = (direction: number) => {
+    const newPage = page + direction;
+    const params = new URLSearchParams(window.location.search);
+    params.set("page", newPage.toString());
+    setPage(newPage);
+    navigate(`?${params.toString()}`);
+  };
 
   return (
     <Container className="movie-list-container">
@@ -48,7 +58,11 @@ const MoviesByGenrePage = () => {
           </div>
         )}
       />
-      <PaginationComponent />
+      <PaginationComponent
+        page={page}
+        totalPages={discoverMoviesResponse?.total_pages || 0}
+        onPageClick={handlePageClick}
+      />
     </Container>
   );
 };

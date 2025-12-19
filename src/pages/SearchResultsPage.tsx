@@ -1,5 +1,7 @@
+import { Container } from "react-bootstrap";
 import MovieCardComponent from "../components/MovieCardComponent";
 import { useMovies } from "../contexts/MovieContext";
+import MovieList from "../components/MovieList";
 
 const SearchResultsPage = () => {
   const { isLoading } = useMovies();
@@ -8,21 +10,16 @@ const SearchResultsPage = () => {
   return isLoading ? (
     <p>LOADING...</p>
   ) : (
-    <>
-      <div className="searchResults">
-        {searchResponse && searchResponse.results.length > 0 ? (
-          <div>
-            {searchResponse.results.map((movie) => (
-              <div key={movie.id}>
-                <MovieCardComponent searchMovie={movie} />
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div>No search results to display.</div>
-        )}
-      </div>
-    </>
+    <MovieList
+      className="movies-by-genre"
+      movies={searchResponse?.results ?? null}
+      title="Search Results"
+      renderMovie={(movie) => (
+        <div key={movie.id}>
+          <MovieCardComponent searchMovie={movie} />
+        </div>
+      )}
+    />
   );
 };
 

@@ -56,10 +56,7 @@ export const getPerson = async (id: number) => {
   const result = await axios.get<Person>(
     `${BASE_URL}/person/${id}?api_key=${API_KEY}`
   );
-  // return result.data;
-  return new Promise<Person>((resolve) => {
-    setTimeout(() => resolve(result.data), 2000); // 2s delay
-  });
+  return result.data;
 };
 
 export const getNowPlaying = async (page: number = 1) => {
@@ -86,7 +83,7 @@ export const getTop = async (page: number = 1) => {
 export const getMovieCredits = async (movieId: number) => {
   try {
     const result = await axios.get<Credits>(
-      `${BASE_URL}/movie/${movieId}/credits?api_key=${API_KEY}&include_adult=false`
+      `${BASE_URL}/movie/${movieId}/credits?api_key=${API_KEY}`
     );
 
     return result.data;
@@ -100,7 +97,7 @@ export const getMovieCredits = async (movieId: number) => {
 
 export const getAllGenres = async () => {
   const result = await axios.get<{ genres: Genre[] }>(
-    `${BASE_URL}/genre/movie/list?api_key=${API_KEY}&include_adult=false`
+    `${BASE_URL}/genre/movie/list?api_key=${API_KEY}`
   );
   return result.data.genres;
 };

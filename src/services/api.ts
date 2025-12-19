@@ -1,12 +1,12 @@
 import axios from "axios";
-import type { MoviesSearchResponse } from "../models/MoviesSearchResponse";
+import type { MoviesSearchResponse } from "../models/SearchMovie";
 import type { Credits } from "../models/Credits";
 import type { Movie } from "../models/Movie";
 import type { Genre } from "../models/Genre";
 import type { MovieCreditsByPerson } from "../models/MovieCreditsByPerson";
 import type { Person } from "../models/Person";
 import type { TvCreditsByPerson } from "../models/TvCreditsByPerson";
-import type { DiscoverMoviesResponse } from "../models/DiscoverMovie";
+import type { DiscoverMoviesResponse } from "../models/DiscoverMovieResponse";
 
 const BASE_URL = "https://api.themoviedb.org/3";
 const API_KEY = import.meta.env.VITE_OWM_APIKEY;

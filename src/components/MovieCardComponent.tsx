@@ -2,19 +2,19 @@ import Card from "react-bootstrap/Card";
 import { MOVIE_PAGE_IMAGE_BASE_URL } from "../constants/config";
 import { useNavigate } from "react-router";
 import { useMovies } from "../contexts/MovieContext";
-import type { Movie } from "../models/Movie";
+import type { SearchMovie } from "../models/SearchMovie";
 
 interface MovieCardProps {
-  movie: Movie;
+  searchMovie: SearchMovie;
 }
 
-const MovieCardComponent: React.FC<MovieCardProps> = ({ movie }) => {
+const MovieCardComponent: React.FC<MovieCardProps> = ({ searchMovie }) => {
   const { loadMovie } = useMovies();
   const navigate = useNavigate();
 
   const handleSelectedMovie = () => {
-    loadMovie(movie.id);
-    navigate(`/movie/${movie.id}`);
+    loadMovie(searchMovie.id);
+    navigate(`/movie/${searchMovie.id}`);
   };
 
   return (
@@ -22,14 +22,15 @@ const MovieCardComponent: React.FC<MovieCardProps> = ({ movie }) => {
       <Card.Img
         variant="top"
         src={
-          MOVIE_PAGE_IMAGE_BASE_URL + movie.poster_path || "/placeholder.jpg"
+          MOVIE_PAGE_IMAGE_BASE_URL + searchMovie.poster_path ||
+          "/placeholder.jpg"
         }
       />
       <Card.Body>
         <div className="rating">
-          <Card.Text>⭐ {movie.vote_average.toFixed(1)}</Card.Text>
+          <Card.Text>⭐ {searchMovie.vote_average.toFixed(1)}</Card.Text>
         </div>
-        <Card.Title>{movie.title}</Card.Title>
+        <Card.Title>{searchMovie.title}</Card.Title>
       </Card.Body>
     </Card>
   );

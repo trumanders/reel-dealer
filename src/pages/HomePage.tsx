@@ -1,31 +1,10 @@
 import { useEffect, useState } from "react";
 import { getNowPlaying, getTop, getTrendingToday } from "../services/api";
-import type { MoviesSearchResponse } from "../models/MoviesSearchResponse";
-import { Container } from "react-bootstrap";
+import type { MoviesSearchResponse } from "../models/SearchMovie";
+import { Container, ThemeProvider } from "react-bootstrap";
 import MovieCardComponent from "../components/MovieCardComponent";
 import { useMovies } from "../contexts/MovieContext";
-
-interface CategoryProps {
-  moviesInCategory: MoviesSearchResponse | null;
-  title: string;
-}
-
-const Category: React.FC<CategoryProps> = ({ moviesInCategory, title }) => (
-  <>
-    <h2>{title}</h2>
-    <div className="category">
-      {moviesInCategory && moviesInCategory.results.length > 0 ? (
-        moviesInCategory.results.map((movie) => (
-          <div key={movie.id}>
-            <MovieCardComponent movie={movie} />
-          </div>
-        ))
-      ) : (
-        <div>No movies found.</div>
-      )}
-    </div>
-  </>
-);
+import MovieList from "../components/MovieList";
 
 const HomePage = () => {
   const [trending, setTrending] = useState<MoviesSearchResponse | null>(null);
@@ -62,9 +41,33 @@ const HomePage = () => {
     <p>LOADING...</p>
   ) : (
     <Container className="categories-container">
-      <Category moviesInCategory={nowPlaying} title="Now Playing" />
-      <Category moviesInCategory={trending} title="Trending" />
-      <Category moviesInCategory={topRated} title="Top Rated" />
+      <MovieList
+        movies={nowPlaying?.results ?? null}
+        title="Now Playing"
+        renderMovie={(movie) => (
+          <div key={movie.id}>
+            <MovieCardComponent searchMovie={movie} />
+          </div>
+        )}
+      />
+      <MovieList
+        movies={trending?.results ?? null}
+        title="Trending"
+        renderMovie={(movie) => (
+          <div key={movie.id}>
+            <MovieCardComponent searchMovie={movie} />
+          </div>
+        )}
+      />
+      <MovieList
+        movies={topRated?.results ?? null}
+        title="Top Rated"
+        renderMovie={(movie) => (
+          <div key={movie.id}>
+            <MovieCardComponent searchMovie={movie} />
+          </div>
+        )}
+      />
     </Container>
   );
 };

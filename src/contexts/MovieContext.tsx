@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { getAllGenres, getMovie, search } from "../services/api";
-import type { MoviesSearchResponse } from "../models/MoviesSearchResponse";
+import type { MoviesSearchResponse } from "../models/SearchMovie";
 import type { Movie } from "../models/Movie";
 import type { Genre } from "../models/Genre";
 

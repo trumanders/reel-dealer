@@ -27,7 +27,7 @@ body {
   padding-top: 10px;
 }
 
-.movies-by-genre {
+.movie-list {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
@@ -76,4 +76,22 @@ body {
 .active-genre {
   border: 1px solid white;
   border-radius: 5px;
+  color: white !important;
+}
+
+.accordion-dark {
+  --bs-accordion-bg: #1e1e1e;
+  --bs-accordion-color: #e0e0e0;
+  --bs-accordion-border-color: #333;
+  --bs-accordion-btn-bg: #1e1e1e;
+  --bs-accordion-btn-color: #e0e0e0;
+  --bs-accordion-btn-focus-border-color: #555;
+  --bs-accordion-btn-focus-box-shadow: none;
+  --bs-accordion-active-bg: #2a2a2a;
+  --bs-accordion-active-color: #fff;
+
+  img {
+    height: 5rem;
+    border-radius: 1rem;
+  }
 }

@@ -5,7 +5,6 @@ import type { Movie } from "../models/Movie";
 import type { Genre } from "../models/Genre";
 import type { MovieCreditsByPerson } from "../models/MovieCreditsByPerson";
 import type { Person } from "../models/Person";
-// import type { TvCreditsByPerson } from "../models/TvCreditsByPerson";
 import type { DiscoverMoviesResponse } from "../models/DiscoverMovieResponse";
 
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -30,6 +29,7 @@ export const getMovie = async (movieId: number) => {
   const result = await axios.get<Movie>(`${BASE_URL}/movie/${movieId}`, {
     params: {
       api_key: API_KEY,
+      include_adult: false,
     },
   });
   return result.data;
@@ -43,39 +43,41 @@ export const getMovieCreditsByPerson = async (personId: number) => {
   return result.data;
 };
 
-// export const getTvCreditsByPerson = async (personId: number) => {
-//   const result = await axios.get<TvCreditsByPerson>(
-//     `${BASE_URL}/person/${personId}/tv_credits`,
-//     { params: { api_key: API_KEY, include_adult: false } }
-//   );
-//   console.log("API RESULT: ", result.data);
-//   return result.data;
-// };
-
 export const getPerson = async (id: number) => {
-  const result = await axios.get<Person>(
-    `${BASE_URL}/person/${id}?api_key=${API_KEY}`
-  );
+  const result = await axios.get<Person>(`${BASE_URL}/person/${id}`, {
+    params: { api_key: API_KEY },
+  });
   return result.data;
 };
 
 export const getNowPlaying = async (page: number = 1) => {
   const result = await axios.get<MoviesSearchResponse>(
-    `${BASE_URL}/movie/now_playing?api_key=${API_KEY}&page=${page}&include_adult=false`
+    `${BASE_URL}/movie/now_playing`,
+    { params: { api_key: API_KEY, page: page, include_adult: false } }
   );
   return result.data;
 };
 
 export const getTrendingToday = async (page: number = 1) => {
   const result = await axios.get<MoviesSearchResponse>(
-    `${BASE_URL}/trending/movie/day?api_key=${API_KEY}&page=${page}&include_adult=false`
+    `${BASE_URL}/trending/movie/day`,
+    { params: { api_key: API_KEY, page: page, include_adult: false } }
+  );
+  return result.data;
+};
+
+export const getTrendingWeek = async (page: number = 1) => {
+  const result = await axios.get<MoviesSearchResponse>(
+    `${BASE_URL}/trending/movie/week`,
+    { params: { api_key: API_KEY, page: page, include_adult: false } }
   );
   return result.data;
 };
 
 export const getTop = async (page: number = 1) => {
   const result = await axios.get<MoviesSearchResponse>(
-    `${BASE_URL}/movie/top_rated?api_key=${API_KEY}&page=${page}&include_adult=false`
+    `${BASE_URL}/movie/top_rated`,
+    { params: { api_key: API_KEY, page: page, include_adult: false } }
   );
   return result.data;
 };
@@ -83,7 +85,8 @@ export const getTop = async (page: number = 1) => {
 export const getMovieCredits = async (movieId: number) => {
   try {
     const result = await axios.get<Credits>(
-      `${BASE_URL}/movie/${movieId}/credits?api_key=${API_KEY}`
+      `${BASE_URL}/movie/${movieId}/credits`,
+      { params: { api_key: API_KEY, include_adult: false } }
     );
 
     return result.data;
@@ -97,7 +100,8 @@ export const getMovieCredits = async (movieId: number) => {
 
 export const getAllGenres = async () => {
   const result = await axios.get<{ genres: Genre[] }>(
-    `${BASE_URL}/genre/movie/list?api_key=${API_KEY}`
+    `${BASE_URL}/genre/movie/list`,
+    { params: { api_key: API_KEY, include_adult: false } }
   );
   return result.data.genres;
 };

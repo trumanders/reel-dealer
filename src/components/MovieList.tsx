@@ -1,6 +1,6 @@
 interface MovieListProps<TMovie> {
   movies: TMovie[] | null;
-  title: string;
+  title: string | null;
   renderMovie: (movie: TMovie) => React.ReactNode;
   className: string;
 }

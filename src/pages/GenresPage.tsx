@@ -4,30 +4,46 @@ import { useMovies } from "../contexts/MovieContext";
 import { getMoviesByGenre } from "../services/api";
 import { useNavigate } from "react-router";
 import type { SearchMovie } from "../models/SearchMovie";
+import { Container } from "react-bootstrap";
 
 const Genres = () => {
   const navigate = useNavigate();
-  const { genres } = useMovies();
+  const { genres, error, setError, isLoading, setIsLoading } = useMovies();
   const [moviesByGenre, setMoviesByGenre] = useState<SearchMovie[][]>([]);
 
   useEffect(() => {
+    setError(null);
     const loadGenresMovies = async () => {
-      const response = await Promise.all(
-        genres.map((genre) => getMoviesByGenre(genre.id))
-      );
-      const moviesArray: SearchMovie[][] = response.map((x) => x.results);
-      setMoviesByGenre(moviesArray);
+      try {
+        setIsLoading(true);
+        const response = await Promise.all(
+          genres.map((genre) => getMoviesByGenre(genre.id))
+        );
+        const moviesArray: SearchMovie[][] = response.map((x) => x.results);
+        setMoviesByGenre(moviesArray);
+        setIsLoading(false);
+      } catch (err) {
+        setError("Failed to load movies for genres: " + (err as Error).message);
+      }
     };
 
-    loadGenresMovies();
-  }, [genres]);
+    if (genres.length > 0) {
+      loadGenresMovies();
+    }
+  }, [genres, setError]);
 
   const handleSelectedGenre = (genreId: number) => {
     navigate(`/genres/${genreId}`);
   };
 
-  return (
-    <>
+  if (error) {
+    return <p>{error}</p>;
+  }
+
+  return isLoading ? (
+    <p>Loading...</p>
+  ) : (
+    <Container>
       {genres.map((genre, index) => (
         <GenreCard
           key={genre.id}
@@ -39,7 +55,7 @@ const Genres = () => {
           onSelectGenre={() => handleSelectedGenre(genre.id)}
         />
       ))}
-    </>
+    </Container>
   );
 };
 

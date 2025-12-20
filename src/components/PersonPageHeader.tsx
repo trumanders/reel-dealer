@@ -6,8 +6,7 @@ import React from "react";
 const PersonPageHeader = ({
   person,
   movieCredits,
-}: // tvCredits,
-{
+}: {
   person: Person;
   movieCredits: MovieCreditsByPerson | null;
 }) => {

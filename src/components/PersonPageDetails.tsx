@@ -11,11 +11,7 @@ interface MovieListProps {
   movies: CastMovieCredits[] | CrewMovieCredits[] | null;
 }
 
-const MovieList: React.FC<MovieListProps> = ({
-  department,
-  movies,
-  // tv,
-}) => {
+const MovieList: React.FC<MovieListProps> = ({ department, movies }) => {
   const navigate = useNavigate();
 
   const handleMovieListClick = (movieId: number) => {
@@ -26,20 +22,27 @@ const MovieList: React.FC<MovieListProps> = ({
     <div>
       <h2>{department}</h2>
       {movies && movies.length > 0 && (
-        <Accordion>
+        <Accordion className="accordion-dark mb-4">
           <Accordion.Item eventKey="movies">
             <Accordion.Header>{` ${movies.length} Movies`}</Accordion.Header>
             <AccordionBody>
-              <ListGroup variant="stream">
+              <ListGroup variant="flush">
                 {movies.map((movie) => (
                   <ListGroup.Item
                     key={movie.id}
-                    className="d-flex align-items-center"
+                    className="d-flex align-items-start bg-dark"
                     onClick={() => handleMovieListClick(movie.id)}
                   >
-                    <img
-                      src={`${MOVIE_PAGE_IMAGE_BASE_URL}${movie.poster_path}`}
-                    ></img>
+                    <div className="d-flex my-0 border-light-subtle text-light p-2 rounded w-100">
+                      <img
+                        className="my-0"
+                        src={`${MOVIE_PAGE_IMAGE_BASE_URL}${movie.poster_path}`}
+                      ></img>
+                      <div className="d-flex flex-column ms-3">
+                        <h5>{movie.title}</h5>
+                        <div>⭐ {movie.vote_average.toFixed(1)}</div>
+                      </div>
+                    </div>
                   </ListGroup.Item>
                 ))}
               </ListGroup>

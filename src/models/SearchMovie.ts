@@ -1,5 +1,3 @@
-import type { Movie } from "./Movie";
-
 export interface SearchMovie {
   adult: boolean;
   backdrop_path: string;

@@ -6,8 +6,10 @@ import { Container } from "react-bootstrap";
 import PersonPageHeader from "../components/PersonPageHeader.tsx";
 import PersonPageDetails from "../components/PersonPageDetails.tsx";
 import type { MovieCreditsByPerson } from "../models/MovieCreditsByPerson.ts";
+import { useMovies } from "../contexts/MovieContext.tsx";
 
 const PersonPage = () => {
+  const { error, setError } = useMovies();
   const { id } = useParams();
   const personId = id ? Number(id) : undefined;
 
@@ -20,27 +22,40 @@ const PersonPage = () => {
   );
 
   useEffect(() => {
+    setError(null);
     const loadPerson = async () => {
-      if (personId) {
-        setIsLoadingPerson(true);
-        const person = await getPerson(personId);
-        setPerson(person);
-        setIsLoadingPerson(false);
+      try {
+        if (personId) {
+          setIsLoadingPerson(true);
+          const person = await getPerson(personId);
+          setPerson(person);
+          setIsLoadingPerson(false);
+        }
+      } catch (err) {
+        setError("Failed to load person: " + (err as Error).message);
       }
     };
 
     const loadMovieCredits = async () => {
-      if (personId) {
-        setIsLoadingMovieCredits(true);
-        const fetchedCredits = await getMovieCreditsByPerson(personId);
-        setMovieCredits(fetchedCredits);
-        setIsLoadingMovieCredits(false);
+      try {
+        if (personId) {
+          setIsLoadingMovieCredits(true);
+          const fetchedCredits = await getMovieCreditsByPerson(personId);
+          setMovieCredits(fetchedCredits);
+          setIsLoadingMovieCredits(false);
+        }
+      } catch (err) {
+        setError("Failed to load movie credits: " + (err as Error).message);
       }
     };
 
     loadPerson();
     loadMovieCredits();
   }, [personId]);
+
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   if (isLoadingPerson || isLoadingMovieCredits) {
     return <p>LOADING...</p>;

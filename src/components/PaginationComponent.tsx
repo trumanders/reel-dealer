@@ -27,7 +27,7 @@ const PaginationComponent: React.FC<PaginationComponentProps> = ({
 
       <div className="next">
         <Button
-          disabled={page === totalPages - 1}
+          disabled={page >= totalPages}
           variant="primary"
           onClick={() => onPageClick(1)}
         >

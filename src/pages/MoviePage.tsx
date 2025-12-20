@@ -9,17 +9,23 @@ import { useNavigate } from "react-router-dom";
 const MoviePage = () => {
   const { id } = useParams();
   const movieId = id ? Number(id) : undefined;
-  const { movie, loadMovie, isLoading } = useMovies();
+  const { movie, loadMovie, isLoading, error, setError } = useMovies();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (movieId) {
+    if (!movieId) return;
+    setError(null);
+
+    try {
       loadMovie(movieId);
+    } catch (err) {
+      setError("Failed to load movie: " + (err as Error).message);
     }
-  }, [movieId, loadMovie]);
+  }, [movieId]);
 
-  if (!movie) return;
+  if (!movie) return null;
 
+  if (error) return <p>{error}</p>;
   return isLoading ? (
     <p>LOADING...</p>
   ) : (

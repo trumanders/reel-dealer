@@ -12,8 +12,9 @@ const Search = () => {
 
   const onSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    handleSearch(searchText.trim());
-    navigate(`/search`);
+    const trimmedText = searchText.trim();
+    handleSearch(trimmedText);
+    navigate(`/search?q=${encodeURIComponent(trimmedText)}`);
   };
 
   return (

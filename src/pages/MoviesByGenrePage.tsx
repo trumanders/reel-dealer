@@ -2,54 +2,56 @@ import { useEffect, useState } from "react";
 import { getMoviesByGenre } from "../services/api";
 import { useParams, useLocation } from "react-router";
 import type { SearchMovie } from "../models/SearchMovie";
-import { Container, Pagination } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import MovieList from "../components/MovieList";
 import { useMovies } from "../contexts/MovieContext";
 import MovieCardComponent from "../components/MovieCardComponent";
-import { useNavigate } from "react-router-dom";
 import PaginationComponent from "../components/PaginationComponent";
 import type { DiscoverMoviesResponse } from "../models/DiscoverMovieResponse";
 
 const MoviesByGenrePage = () => {
-  const { genres } = useMovies();
+  const { genres, handlePageClick, page, syncPageWithURL, error, setError } =
+    useMovies();
   const [discoverMoviesResponse, setDiscoverMoviesResponse] =
     useState<DiscoverMoviesResponse | null>(null);
   const [moviesInGenre, setMoviesInGenre] = useState<SearchMovie[]>();
-  const [page, setPage] = useState<number>(1);
   const { id } = useParams();
   const genreId = id ? Number(id) : undefined;
-
   const location = useLocation();
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const page = Number(params.get("page") || 1);
-    setPage(page);
+    setError(null);
 
+    const currentPage = syncPageWithURL(location.search);
+
+    setIsLoading(true);
     const fetchMoviesInGenre = async () => {
-      if (genreId) {
-        const response = await getMoviesByGenre(genreId, page);
-        setDiscoverMoviesResponse(response);
-        setMoviesInGenre(response.results);
+      try {
+        if (genreId) {
+          const response = await getMoviesByGenre(genreId, currentPage);
+          setDiscoverMoviesResponse(response);
+          setMoviesInGenre(response.results);
+        }
+        setIsLoading(false);
+      } catch (err) {
+        setError("Failed to load movies for genre: " + (err as Error).message);
       }
     };
 
     fetchMoviesInGenre();
   }, [genreId, location.search]);
 
-  const handlePageClick = (direction: number) => {
-    const newPage = page + direction;
-    const params = new URLSearchParams(window.location.search);
-    params.set("page", newPage.toString());
-    setPage(newPage);
-    navigate(`?${params.toString()}`);
-  };
+  if (error) {
+    return <p>{error}</p>;
+  }
 
-  return (
+  return isLoading ? (
+    <p>LOADING...</p>
+  ) : (
     <Container className="movie-list-container">
       <MovieList
-        className="movies-by-genre"
+        className="movie-list"
         movies={moviesInGenre ?? null}
         title={genres.find((g) => g.id === genreId)?.name || "Movies"}
         renderMovie={(movie) => (
@@ -61,7 +63,7 @@ const MoviesByGenrePage = () => {
       <PaginationComponent
         page={page}
         totalPages={discoverMoviesResponse?.total_pages || 0}
-        onPageClick={handlePageClick}
+        onPageClick={(direction) => handlePageClick(direction)}
       />
     </Container>
   );

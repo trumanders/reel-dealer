@@ -4,6 +4,7 @@ import { getAllGenres, getMovie, search } from "../services/api";
 import type { MoviesSearchResponse } from "../models/SearchMovie";
 import type { Movie } from "../models/Movie";
 import type { Genre } from "../models/Genre";
+import { useNavigate } from "react-router-dom";
 
 interface MovieContextType {
   searchText: string;
@@ -24,6 +25,10 @@ interface MovieContextType {
   >;
   handleSearch: (searchText: string, page?: number) => void;
   loadMovie: (movieId: number) => void;
+  handlePageClick: (direction: number, search?: string) => void;
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  syncPageWithURL: (search: string) => number;
 }
 
 interface TodosProviderProps {
@@ -41,11 +46,21 @@ export const MovieProvider = ({ children }: TodosProviderProps) => {
     useState<MoviesSearchResponse | null>(null);
   const [movie, setMovie] = useState<Movie | null>(null);
   const [genres, setGenres] = useState<Genre[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const navigate = useNavigate();
+
   const handleSearch = async (searchText: string, page: number = 1) => {
-    setIsLoading(true);
-    const result = await search(searchText, page);
-    setSearchResponse(result);
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      setError(null);
+      const result = await search(searchText, page);
+      setSearchResponse(result);
+      setPage(page);
+    } catch (err) {
+      setError("Failed to load search results: " + (err as Error).message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const loadMovie = async (movieId: number) => {
@@ -53,6 +68,20 @@ export const MovieProvider = ({ children }: TodosProviderProps) => {
     const movieResult = await getMovie(movieId);
     setMovie(movieResult);
     setIsLoading(false);
+  };
+
+  const handlePageClick = (direction: number, search?: string) => {
+    const newPage = page + direction;
+    const params = new URLSearchParams(search);
+    params.set("page", newPage.toString());
+    navigate(`?${params.toString()}`);
+  };
+
+  const syncPageWithURL = (search: string) => {
+    const params = new URLSearchParams(search);
+    const newPage = Number(params.get("page") || 1);
+    setPage(newPage);
+    return newPage;
   };
 
   useEffect(() => {
@@ -84,6 +113,10 @@ export const MovieProvider = ({ children }: TodosProviderProps) => {
         loadMovie,
         genres,
         setGenres,
+        handlePageClick,
+        page,
+        setPage,
+        syncPageWithURL,
       }}
     >
       {children}

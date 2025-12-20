@@ -29,6 +29,7 @@ const MovieList: React.FC<MovieListProps> = ({ department, movies }) => {
               <ListGroup variant="flush">
                 {movies.map((movie) => (
                   <ListGroup.Item
+                    style={{ cursor: "pointer" }}
                     key={movie.id}
                     className="d-flex align-items-start bg-dark"
                     onClick={() => handleMovieListClick(movie.id)}

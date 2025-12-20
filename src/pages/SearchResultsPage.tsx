@@ -36,6 +36,15 @@ const SearchResultsPage = () => {
     <p>LOADING...</p>
   ) : (
     <Container>
+      <div className="custom-pagination py-4">
+        <PaginationComponent
+          page={page}
+          totalPages={searchResponse?.total_pages || 0}
+          onPageClick={(direction) =>
+            handlePageClick(direction, location.search)
+          }
+        />
+      </div>
       <MovieList
         className="movie-list"
         movies={searchResponse?.results ?? null}
@@ -46,11 +55,15 @@ const SearchResultsPage = () => {
           </div>
         )}
       />
-      <PaginationComponent
-        page={page}
-        totalPages={searchResponse?.total_pages || 0}
-        onPageClick={(direction) => handlePageClick(direction, location.search)}
-      />
+      <div className="custom-pagination pb-4">
+        <PaginationComponent
+          page={page}
+          totalPages={searchResponse?.total_pages || 0}
+          onPageClick={(direction) =>
+            handlePageClick(direction, location.search)
+          }
+        />
+      </div>
     </Container>
   );
 };

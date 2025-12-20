@@ -47,6 +47,12 @@ body {
   .card-title {
     font-size: medium;
   }
+
+  img {
+    width: 100%;
+    height: auto;
+    max-width: 240px;
+  }
 }
 
 .sub-title-text {
@@ -99,5 +105,31 @@ body {
     filter: blur(1px);
     max-height: 80px;
     object-fit: cover;
+  }
+}
+
+@media (max-width: 768px) {
+  .movie-card {
+    transform: scale(0.8);
+  }
+  .custom-pagination button {
+    transform: scale(0.8);
+  }
+  .browse-by-genre-button {
+    transform: scale(0.8);
+  }
+}
+
+@media (max-width: 480px) {
+  .movie-card {
+    max-width: 120px;
+    max-height: 300px;
+  }
+
+  .browse-by-genre-button {
+    transform: scale(0.6);
+  }
+  .custom-pagination button {
+    transform: scale(0.6);
   }
 }

@@ -51,6 +51,13 @@ const MoviesByGenrePage = () => {
   ) : (
     moviesInGenre && (
       <Container className="movie-list-container">
+        <div className="custom-pagination py-0">
+          <PaginationComponent
+            page={page}
+            totalPages={discoverMoviesResponse?.total_pages || 0}
+            onPageClick={(direction) => handlePageClick(direction)}
+          />
+        </div>
         <MovieList
           className="movie-list"
           movies={moviesInGenre ?? null}
@@ -61,11 +68,13 @@ const MoviesByGenrePage = () => {
             </div>
           )}
         />
-        <PaginationComponent
-          page={page}
-          totalPages={discoverMoviesResponse?.total_pages || 0}
-          onPageClick={(direction) => handlePageClick(direction)}
-        />
+        <div className="custom-pagination pb-4">
+          <PaginationComponent
+            page={page}
+            totalPages={discoverMoviesResponse?.total_pages || 0}
+            onPageClick={(direction) => handlePageClick(direction)}
+          />
+        </div>
       </Container>
     )
   );

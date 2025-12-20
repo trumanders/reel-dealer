@@ -12,18 +12,17 @@ const Navigation = () => {
           REEL DEALER
         </Navbar.Brand>
         <Search />
-        <Navbar.Collapse>
-          <Nav>
-            <NavLink
-              to="/genres"
-              className={({ isActive }) =>
-                "px-4 py-2 nav-link ms-4" + (isActive ? " active-genre" : "")
-              }
-            >
-              BROWSE BY GENRES
-            </NavLink>
-          </Nav>
-        </Navbar.Collapse>
+        <Nav>
+          <NavLink
+            to="/genres"
+            className={({ isActive }) =>
+              "browse-by-genres-button px-4 py-2 nav-link ms-4" +
+              (isActive ? " active-genre" : "")
+            }
+          >
+            BROWSE BY GENRES
+          </NavLink>
+        </Nav>
       </Container>
     </Navbar>
   );

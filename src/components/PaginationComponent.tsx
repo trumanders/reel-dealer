@@ -12,11 +12,11 @@ const PaginationComponent: React.FC<PaginationComponentProps> = ({
   onPageClick,
 }) => {
   return (
-    <div className="d-flex justify-content-between align-items-center">
+    <div className="custom-pagination d-flex justify-content-between align-items-center">
       <div className="prev">
         <Button
           disabled={page < 2}
-          variant="primary"
+          variant="outline-light"
           onClick={() => onPageClick(-1)}
         >
           Previous Page
@@ -27,8 +27,9 @@ const PaginationComponent: React.FC<PaginationComponentProps> = ({
 
       <div className="next">
         <Button
+          className="pagination-button"
           disabled={page >= totalPages}
-          variant="primary"
+          variant="outline-light"
           onClick={() => onPageClick(1)}
         >
           Next Page

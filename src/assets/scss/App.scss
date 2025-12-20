@@ -94,4 +94,10 @@ body {
     height: 5rem;
     border-radius: 1rem;
   }
+
+  .blur-sm {
+    filter: blur(1px);
+    max-height: 80px;
+    object-fit: cover;
+  }
 }

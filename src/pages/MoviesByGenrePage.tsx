@@ -49,23 +49,25 @@ const MoviesByGenrePage = () => {
   return isLoading ? (
     <p>LOADING...</p>
   ) : (
-    <Container className="movie-list-container">
-      <MovieList
-        className="movie-list"
-        movies={moviesInGenre ?? null}
-        title={genres.find((g) => g.id === genreId)?.name || "Movies"}
-        renderMovie={(movie) => (
-          <div key={movie.id}>
-            <MovieCardComponent searchMovie={movie} />
-          </div>
-        )}
-      />
-      <PaginationComponent
-        page={page}
-        totalPages={discoverMoviesResponse?.total_pages || 0}
-        onPageClick={(direction) => handlePageClick(direction)}
-      />
-    </Container>
+    moviesInGenre && (
+      <Container className="movie-list-container">
+        <MovieList
+          className="movie-list"
+          movies={moviesInGenre ?? null}
+          title={genres.find((g) => g.id === genreId)?.name || "Movies"}
+          renderMovie={(movie) => (
+            <div key={movie.id}>
+              <MovieCardComponent searchMovie={movie} />
+            </div>
+          )}
+        />
+        <PaginationComponent
+          page={page}
+          totalPages={discoverMoviesResponse?.total_pages || 0}
+          onPageClick={(direction) => handlePageClick(direction)}
+        />
+      </Container>
+    )
   );
 };
 

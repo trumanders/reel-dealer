@@ -4,7 +4,7 @@ import { useMovies } from "../contexts/MovieContext";
 import { getMoviesByGenre } from "../services/api";
 import { useNavigate } from "react-router";
 import type { SearchMovie } from "../models/SearchMovie";
-import { Container } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 
 const Genres = () => {
   const navigate = useNavigate();
@@ -44,17 +44,20 @@ const Genres = () => {
     <p>Loading...</p>
   ) : (
     <Container>
-      {genres.map((genre, index) => (
-        <GenreCard
-          key={genre.id}
-          genreId={genre.id}
-          genreName={genre.name}
-          moviePosters={
-            moviesByGenre?.[index]?.slice(0, 4).map((m) => m.poster_path) ?? []
-          }
-          onSelectGenre={() => handleSelectedGenre(genre.id)}
-        />
-      ))}
+      <Row xs={1} sm={2} md={3} lg={4} className="g-3">
+        {genres.map((genre, index) => (
+          <GenreCard
+            key={genre.id}
+            genreId={genre.id}
+            genreName={genre.name}
+            moviePosters={
+              moviesByGenre?.[index]?.slice(0, 4).map((m) => m.poster_path) ??
+              []
+            }
+            onSelectGenre={() => handleSelectedGenre(genre.id)}
+          />
+        ))}
+      </Row>
     </Container>
   );
 };

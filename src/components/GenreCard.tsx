@@ -18,10 +18,10 @@ const GenreCard: React.FC<GenreCardProps> = ({
     <Card
       as="button"
       type="button"
-      className="genre-card"
+      className="genre-card bg-black text-white mt-4"
       onClick={() => onSelectGenre(genreId)}
     >
-      <Card.Header>{genreName}</Card.Header>
+      <h5 className="display-6 text-start mb-2">{genreName}</h5>
       <Card.Body>
         <Row className="g-1">
           {moviePosters.map((poster, index) => (
@@ -30,6 +30,12 @@ const GenreCard: React.FC<GenreCardProps> = ({
                 src={`${MOVIE_PAGE_IMAGE_BASE_URL}${poster}`}
                 className="img-fluid"
                 alt={`Movie ${index + 1}`}
+                style={{
+                  width: "60px",
+                  height: "90px",
+                  objectFit: "cover",
+                  filter: "blur(2px)",
+                }}
               />
             </Col>
           ))}

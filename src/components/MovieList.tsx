@@ -1,3 +1,5 @@
+import { Container } from "react-bootstrap";
+
 interface MovieListProps<TMovie> {
   movies: TMovie[] | null;
   title: string | null;
@@ -10,17 +12,18 @@ const MovieList = <TMovie,>({
   movies,
   title,
   renderMovie,
-}: MovieListProps<TMovie>) => (
-  <>
-    <h2>{title}</h2>
-    <div className={className}>
-      {movies && movies.length > 0 ? (
-        movies.map(renderMovie)
-      ) : (
-        <div>No movies found.</div>
-      )}
-    </div>
-  </>
-);
+}: MovieListProps<TMovie>) =>
+  movies && (
+    <Container>
+      <h2>{title}</h2>
+      <div className={className}>
+        {movies && movies.length > 0 ? (
+          movies.map(renderMovie)
+        ) : (
+          <div>No movies found.</div>
+        )}
+      </div>
+    </Container>
+  );
 
 export default MovieList;

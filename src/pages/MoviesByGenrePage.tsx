@@ -51,7 +51,7 @@ const MoviesByGenrePage = () => {
   ) : (
     moviesInGenre && (
       <Container className="movie-list-container">
-        <div className="custom-pagination py-0">
+        <div className="custom-pagination-next py-0">
           <PaginationComponent
             page={page}
             totalPages={discoverMoviesResponse?.total_pages || 0}
@@ -68,7 +68,7 @@ const MoviesByGenrePage = () => {
             </div>
           )}
         />
-        <div className="custom-pagination pb-4">
+        <div className="custom-pagination-previous pb-4">
           <PaginationComponent
             page={page}
             totalPages={discoverMoviesResponse?.total_pages || 0}

@@ -19,11 +19,11 @@ const PaginationComponent: React.FC<PaginationComponentProps> = ({
           variant="outline-light"
           onClick={() => onPageClick(-1)}
         >
-          Previous Page
+          {"<"}
         </Button>
       </div>
 
-      <div className="page">{`page ${page} of ${totalPages}`}</div>
+      <div className="page">{`${page} / ${totalPages}`}</div>
 
       <div className="next">
         <Button
@@ -32,7 +32,7 @@ const PaginationComponent: React.FC<PaginationComponentProps> = ({
           variant="outline-light"
           onClick={() => onPageClick(1)}
         >
-          Next Page
+          {">"}
         </Button>
       </div>
     </div>

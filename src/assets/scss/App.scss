@@ -115,21 +115,11 @@ body {
   .custom-pagination button {
     transform: scale(0.8);
   }
-  .browse-by-genre-button {
-    transform: scale(0.8);
-  }
 }
 
 @media (max-width: 480px) {
   .movie-card {
     max-width: 120px;
     max-height: 300px;
-  }
-
-  .browse-by-genre-button {
-    transform: scale(0.6);
-  }
-  .custom-pagination button {
-    transform: scale(0.6);
   }
 }

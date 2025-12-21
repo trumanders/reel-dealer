@@ -11,16 +11,18 @@ const Navigation = () => {
         <Navbar.Brand as={Link} to="/">
           REEL DEALER
         </Navbar.Brand>
-        <Search />
+        <div className="mt-3 mx-1">
+          <Search />
+        </div>
         <Nav>
           <NavLink
             to="/genres"
             className={({ isActive }) =>
-              "browse-by-genres-button px-4 py-2 nav-link ms-4" +
+              "browse-by-genre-button px-3 py-1 nav-link ms-0" +
               (isActive ? " active-genre" : "")
             }
           >
-            BROWSE BY GENRES
+            BY GENRE
           </NavLink>
         </Nav>
       </Container>

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useMovies } from "../contexts/MovieContext";
+import { useMovies } from "../contexts/useMovies";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import MoviePageHeader from "../components/MoviePageHeader.tsx";
@@ -21,7 +21,7 @@ const MoviePage = () => {
     } catch (err) {
       setError("Failed to load movie: " + (err as Error).message);
     }
-  }, [movieId]);
+  }, [movieId, setError, loadMovie]);
 
   if (!movie) return null;
 

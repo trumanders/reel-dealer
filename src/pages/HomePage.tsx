@@ -8,7 +8,7 @@ import {
 import type { MoviesSearchResponse } from "../models/SearchMovie";
 import { Container, ButtonGroup, ToggleButton } from "react-bootstrap";
 import MovieCardComponent from "../components/MovieCardComponent";
-import { useMovies } from "../contexts/MovieContext";
+import { useMovies } from "../contexts/useMovies";
 import MovieList from "../components/MovieList";
 
 const HomePage = () => {
@@ -42,7 +42,7 @@ const HomePage = () => {
     };
 
     fetchCategories();
-  }, [trendingState]);
+  }, [trendingState, setError]);
 
   const isDataReady = () => {
     return (

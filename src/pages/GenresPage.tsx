@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import GenreCard from "../components/GenreCard";
-import { useMovies } from "../contexts/MovieContext";
+import { useMovies } from "../contexts/useMovies";
 import { getMoviesByGenre } from "../services/api";
 import { useNavigate } from "react-router";
 import type { SearchMovie } from "../models/SearchMovie";
@@ -30,7 +30,7 @@ const Genres = () => {
     if (genres.length > 0) {
       loadGenresMovies();
     }
-  }, [genres, setError]);
+  }, [genres, setError, setIsLoading]);
 
   const handleSelectedGenre = (genreId: number) => {
     navigate(`/genres/${genreId}`);

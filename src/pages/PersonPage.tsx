@@ -6,7 +6,7 @@ import { Container } from "react-bootstrap";
 import PersonPageHeader from "../components/PersonPageHeader.tsx";
 import PersonPageDetails from "../components/PersonPageDetails.tsx";
 import type { MovieCreditsByPerson } from "../models/MovieCreditsByPerson.ts";
-import { useMovies } from "../contexts/MovieContext.tsx";
+import { useMovies } from "../contexts/useMovies.ts";
 
 const PersonPage = () => {
   const { error, setError } = useMovies();
@@ -51,7 +51,7 @@ const PersonPage = () => {
 
     loadPerson();
     loadMovieCredits();
-  }, [personId]);
+  }, [personId, setError]);
 
   if (error) {
     return <p>{error}</p>;

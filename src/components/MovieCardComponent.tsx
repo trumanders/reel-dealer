@@ -1,7 +1,7 @@
 import Card from "react-bootstrap/Card";
 import { MOVIE_PAGE_IMAGE_BASE_URL } from "../constants/config";
 import { useNavigate } from "react-router";
-import { useMovies } from "../contexts/MovieContext";
+import { useMovies } from "../contexts/useMovies";
 import type { SearchMovie } from "../models/SearchMovie";
 
 interface MovieCardProps {

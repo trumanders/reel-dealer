@@ -1,5 +1,5 @@
 import MovieCardComponent from "../components/MovieCardComponent";
-import { useMovies } from "../contexts/MovieContext";
+import { useMovies } from "../contexts/useMovies";
 import MovieList from "../components/MovieList";
 import { useSearchParams, useLocation } from "react-router-dom";
 import { useEffect } from "react";
@@ -26,7 +26,7 @@ const SearchResultsPage = () => {
     if (query) {
       handleSearch(query, currentPage);
     }
-  }, [location.search, query]);
+  }, [location.search, query, handleSearch, syncPageWithURL]);
 
   if (error) {
     return <p>{error}</p>;

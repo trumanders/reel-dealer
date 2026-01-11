@@ -4,7 +4,7 @@ import { useParams, useLocation } from "react-router";
 import type { SearchMovie } from "../models/SearchMovie";
 import { Container } from "react-bootstrap";
 import MovieList from "../components/MovieList";
-import { useMovies } from "../contexts/MovieContext";
+import { useMovies } from "../contexts/useMovies";
 import MovieCardComponent from "../components/MovieCardComponent";
 import PaginationComponent from "../components/PaginationComponent";
 import type { DiscoverMoviesResponse } from "../models/DiscoverMovieResponse";
@@ -25,9 +25,9 @@ const MoviesByGenrePage = () => {
 
     const currentPage = syncPageWithURL(location.search);
 
-    setIsLoading(true);
     const fetchMoviesInGenre = async () => {
       try {
+        setIsLoading(true);
         if (genreId) {
           const response = await getMoviesByGenre(genreId, currentPage);
           setDiscoverMoviesResponse(response);
@@ -40,7 +40,7 @@ const MoviesByGenrePage = () => {
     };
 
     fetchMoviesInGenre();
-  }, [genreId, location.search]);
+  }, [genreId, location.search, setError, syncPageWithURL]);
 
   if (error) {
     return <p>{error}</p>;

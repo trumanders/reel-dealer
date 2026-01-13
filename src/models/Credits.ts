@@ -8,7 +8,6 @@ export interface CastMember {
   id: number;
   name: string;
   profile_path: string;
-  playedCharacter: string;
 }
 
 export interface CrewMember {
@@ -17,5 +16,4 @@ export interface CrewMember {
   department: string;
   job: string;
   profile_path: string;
-  playedCharacter: string;
 }

@@ -18,7 +18,7 @@ const HomePage = () => {
     null
   );
   const [topRated, setTopRated] = useState<MoviesSearchResponse | null>(null);
-  const [trendingState, setTrendingState] = useState<"day" | "week">("day");
+  const [isTrendingDay, setIsTrendingDay] = useState(true);
 
   const { isLoading } = useMovies();
 
@@ -28,10 +28,9 @@ const HomePage = () => {
       try {
         const nowPlaying = await getNowPlaying();
         const top = await getTop();
-        const trending =
-          trendingState === "day"
-            ? await getTrendingToday()
-            : await getTrendingWeek();
+        const trending = isTrendingDay
+          ? await getTrendingToday()
+          : await getTrendingWeek();
 
         setNowPlaying(nowPlaying);
         setTrending(trending);
@@ -42,7 +41,7 @@ const HomePage = () => {
     };
 
     fetchCategories();
-  }, [trendingState, setError]);
+  }, [isTrendingDay, setError]);
 
   const isDataReady = () => {
     return (
@@ -80,8 +79,8 @@ const HomePage = () => {
             id="trending-today"
             type="radio"
             variant="outline-light"
-            checked={trendingState === "day"}
-            onChange={() => setTrendingState("day")}
+            checked={isTrendingDay}
+            onClick={() => setIsTrendingDay(true)}
             value="day"
           >
             Today
@@ -90,8 +89,8 @@ const HomePage = () => {
             id="trending-week"
             type="radio"
             variant="outline-light"
-            checked={trendingState === "week"}
-            onChange={() => setTrendingState("week")}
+            checked={!isTrendingDay}
+            onClick={() => setIsTrendingDay(false)}
             value="week"
           >
             This Week

@@ -1,4 +1,4 @@
-import { Col, NavLink, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import type { Movie } from "../models/Movie";
 import { MOVIE_PAGE_IMAGE_BASE_URL } from "../constants/config";
 import React, { useEffect, useState } from "react";

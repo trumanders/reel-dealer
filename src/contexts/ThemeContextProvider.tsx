@@ -12,7 +12,6 @@ export const ThemeContextProvider: React.FC<ThemeContextProviderProps> = ({
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
-    console.log("Toggled theme to", isDarkMode ? "light" : "dark");
   };
 
   return (

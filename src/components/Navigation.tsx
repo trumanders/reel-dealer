@@ -42,11 +42,11 @@ const Navigation = () => {
               id="toggle-dark-theme"
               type="checkbox"
               variant="outline-light"
-              checked={isDarkMode}
+              checked={!isDarkMode}
               onClick={() => toggleTheme()}
               value="light"
             >
-              {isDarkMode ? "LIGHT MODE" : "DARK MODE"}
+              {isDarkMode ? "DARK MODE" : "LIGHT MODE"}
             </ToggleButton>
           </ButtonGroup>
         </Nav>

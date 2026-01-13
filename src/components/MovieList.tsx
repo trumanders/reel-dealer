@@ -14,7 +14,7 @@ const MovieList = <TMovie,>({
   renderMovie,
 }: MovieListProps<TMovie>) =>
   movies && (
-    <Container>
+    <Container className="movie-list">
       <h2>{title}</h2>
       <div className={className}>
         {movies && movies.length > 0 ? (

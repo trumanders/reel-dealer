@@ -31,6 +31,16 @@ body.dark-mode {
   --active-genre-border: #fff;
   --active-genre-color: #fff;
   --nav-link-color: #90a0ff;
+
+  --bs-accordion-bg: #1e1e1e;
+  --bs-accordion-color: #e0e0e0;
+  --bs-accordion-border-color: #333;
+  --bs-accordion-btn-bg: #1e1e1e;
+  --bs-accordion-btn-color: #e0e0e0;
+  --bs-accordion-btn-focus-border-color: #555;
+  --bs-accordion-btn-focus-box-shadow: none;
+  --bs-accordion-active-bg: #2a2a2a;
+  --bs-accordion-active-color: #fff;
 }
 
 body {
@@ -64,6 +74,12 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
+}
+
+.movie-list-item {
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+  border: 1px solid var(--bs-accordion-border-color);
 }
 
 .movie-card {
@@ -119,17 +135,36 @@ body {
   color: var(--active-genre-color);
 }
 
-.accordion-dark {
-  --bs-accordion-bg: #1e1e1e;
-  --bs-accordion-color: #e0e0e0;
-  --bs-accordion-border-color: #333;
-  --bs-accordion-btn-bg: #1e1e1e;
-  --bs-accordion-btn-color: #e0e0e0;
-  --bs-accordion-btn-focus-border-color: #555;
-  --bs-accordion-btn-focus-box-shadow: none;
-  --bs-accordion-active-bg: #2a2a2a;
-  --bs-accordion-active-color: #fff;
+.accordion {
+  --bs-accordion-bg: var(--bs-accordion-bg);
+  --bs-accordion-color: var(--bs-accordion-color);
+  --bs-accordion-border-color: var(--bs-accordion-border-color);
 
+  .accordion-item {
+    background-color: var(--bs-accordion-bg);
+    color: var(--bs-accordion-color);
+    border-color: var(--bs-accordion-border-color);
+  }
+
+  .accordion-button {
+    background-color: var(--bs-accordion-btn-bg);
+    color: var(--bs-accordion-btn-color);
+
+    &:not(.collapsed) {
+      background-color: var(--bs-accordion-active-bg);
+      color: var(--bs-accordion-active-color);
+    }
+
+    &:focus {
+      border-color: var(--bs-accordion-btn-focus-border-color);
+      box-shadow: var(--bs-accordion-btn-focus-box-shadow);
+    }
+  }
+
+  .accordion-body {
+    background-color: var(--bs-accordion-bg);
+    color: var(--bs-accordion-color);
+  }
   img {
     height: 5rem;
     border-radius: 1rem;

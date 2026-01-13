@@ -22,7 +22,7 @@ const MovieList: React.FC<MovieListProps> = ({ department, movies }) => {
     <div>
       <h2>{department}</h2>
       {movies && movies.length > 0 && (
-        <Accordion className="accordion-dark mb-4">
+        <Accordion className="accordion mb-4">
           <Accordion.Item eventKey="movies">
             <Accordion.Header>{` ${movies.length} Movies`}</Accordion.Header>
             <AccordionBody>
@@ -31,10 +31,10 @@ const MovieList: React.FC<MovieListProps> = ({ department, movies }) => {
                   <ListGroup.Item
                     style={{ cursor: "pointer" }}
                     key={movie.id}
-                    className="d-flex align-items-start bg-dark"
+                    className="d-flex align-items-start"
                     onClick={() => handleMovieListClick(movie.id)}
                   >
-                    <div className="d-flex my-0 border-light-subtle text-light p-2 rounded w-100">
+                    <div className="d-flex my-0 p-2 rounded w-100 movie-list-item">
                       <img
                         className="my-0"
                         src={`${MOVIE_PAGE_IMAGE_BASE_URL}${movie.poster_path}`}

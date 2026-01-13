@@ -22,19 +22,22 @@ export const MovieProvider = ({ children }: MovieProviderProps) => {
   const [page, setPage] = useState<number>(1);
   const navigate = useNavigate();
 
-  const handleSearch = async (searchText: string, page: number = 1) => {
-    try {
-      setIsLoading(true);
-      setError(null);
-      const result = await search(searchText, page);
-      setSearchResponse(result);
-      setPage(page);
-    } catch (err) {
-      setError("Failed to load search results: " + (err as Error).message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const handleSearch = useCallback(
+    async (searchText: string, page: number = 1) => {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const result = await search(searchText, page);
+        setSearchResponse(result);
+        setPage(page);
+      } catch (err) {
+        setError("Failed to load search results: " + (err as Error).message);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    []
+  );
 
   const loadMovie = useCallback(async (movieId: number) => {
     setIsLoading(true);
@@ -50,12 +53,12 @@ export const MovieProvider = ({ children }: MovieProviderProps) => {
     navigate(`?${params.toString()}`);
   };
 
-  const syncPageWithURL = (search: string) => {
+  const syncPageWithURL = useCallback((search: string) => {
     const params = new URLSearchParams(search);
     const newPage = Number(params.get("page") || 1);
     setPage(newPage);
     return newPage;
-  };
+  }, []);
 
   useEffect(() => {
     const loadGenres = async () => {

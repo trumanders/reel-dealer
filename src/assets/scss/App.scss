@@ -1,8 +1,41 @@
 @import "bootstrap/scss/bootstrap";
 
+/* LIGHT MODE */
+:root {
+  --bs-body-bg: #fff;
+  --bs-body-color: #212529;
+  --movie-card-bg: #fff;
+  --movie-card-color: #212529;
+  --active-genre-border: #212529;
+  --active-genre-color: #212529;
+  --nav-link-color: #6378ec;
+
+  /* Accordion light mode */
+  --bs-accordion-bg: #fff;
+  --bs-accordion-color: #212529;
+  --bs-accordion-border-color: #dee2e6;
+  --bs-accordion-btn-bg: #fff;
+  --bs-accordion-btn-color: #212529;
+  --bs-accordion-btn-focus-border-color: #80bdff;
+  --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+  --bs-accordion-active-bg: #e9ecef;
+  --bs-accordion-active-color: #212529;
+}
+
+/* DARK MODE*/
+body.dark-mode {
+  --bs-body-bg: #212529;
+  --bs-body-color: #f8f9fa;
+  --movie-card-bg: #1f1f1f;
+  --movie-card-color: #fff;
+  --active-genre-border: #fff;
+  --active-genre-color: #fff;
+  --nav-link-color: #90a0ff;
+}
+
 body {
-  background-color: rgb(0, 0, 0);
-  color: white;
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
 }
 
 .searchResults {
@@ -38,7 +71,8 @@ body {
   color: white;
   width: 12rem;
   height: 25rem;
-  background-color: rgb(31, 31, 31);
+  background-color: var(--movie-card-bg);
+  color: var(--movie-card-color);
   border-style: none;
   border-radius: 10px;
   .card-text {
@@ -70,7 +104,7 @@ body {
 }
 
 .movie-page-details .nav-link {
-  color: rgb(99, 120, 236);
+  color: var(--nav-link-color);
   font-weight: 500;
 }
 
@@ -80,9 +114,9 @@ body {
 }
 
 .active-genre {
-  border: 1px solid white;
+  border: 1px solid var(--active-genre-border);
   border-radius: 5px;
-  color: white !important;
+  color: var(--active-genre-color);
 }
 
 .accordion-dark {

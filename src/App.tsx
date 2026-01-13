@@ -8,11 +8,16 @@ import MoviePage from "./pages/MoviePage";
 import PersonPage from "./pages/PersonPage";
 import Genres from "./pages/GenresPage";
 import MoviesByGenrePage from "./pages/MoviesByGenrePage";
+import { ThemeContextProvider } from "./contexts/ThemeContextProvider";
+import { useEffect } from "react";
+import { useTheme } from "./contexts/useTheme.tsx";
 
 const App = () => {
   return (
     <>
-      <Navigation />
+      <ThemeContextProvider>
+        <Navigation />
+      </ThemeContextProvider>
       <Container>
         <Routes>
           <Route path="/" element={<HomePage />} />

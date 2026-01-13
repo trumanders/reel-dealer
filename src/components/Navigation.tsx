@@ -2,9 +2,21 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import { Link, NavLink } from "react-router-dom";
 import Search from "./Search";
-import { Nav } from "react-bootstrap";
+import { ButtonGroup, Nav, ToggleButton } from "react-bootstrap";
+import { useTheme } from "../contexts/useTheme.tsx";
+import { useEffect } from "react";
 
 const Navigation = () => {
+  const { isDarkMode, toggleTheme } = useTheme();
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
+    }
+  }, [isDarkMode]);
+
   return (
     <Navbar bg="dark" variant="dark" expand="md">
       <Container>
@@ -22,8 +34,21 @@ const Navigation = () => {
               (isActive ? " active-genre" : "")
             }
           >
-            BY GENRE
+            BROWSE BY GENRE
           </NavLink>
+          <ButtonGroup size="sm">
+            <ToggleButton
+              className="ms-5"
+              id="toggle-dark-theme"
+              type="checkbox"
+              variant="outline-light"
+              checked={isDarkMode}
+              onClick={() => toggleTheme()}
+              value="light"
+            >
+              {isDarkMode ? "LIGHT MODE" : "DARK MODE"}
+            </ToggleButton>
+          </ButtonGroup>
         </Nav>
       </Container>
     </Navbar>

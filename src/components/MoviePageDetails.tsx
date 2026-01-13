@@ -4,6 +4,7 @@ import { MOVIE_PAGE_IMAGE_BASE_URL } from "../constants/config";
 import React, { useEffect, useState } from "react";
 import type { CastMember, Credits, CrewMember } from "../models/Credits";
 import { getMovieCredits } from "../services/api";
+import { Link } from "react-router";
 
 const MoviePageDetails = ({ movie }: { movie: Movie }) => {
   const [credits, setCredits] = useState<Credits | null>(null);
@@ -71,9 +72,7 @@ const MoviePageDetails = ({ movie }: { movie: Movie }) => {
               <Col className="d-flex">
                 {uniqueWriters?.map((writer, index, writers) => (
                   <React.Fragment key={writer.id}>
-                    <NavLink href={`/person/${writer.id}`}>
-                      {writer.name}
-                    </NavLink>
+                    <Link to={`/person/${writer.id}`}>{writer.name}</Link>
                     {addBulletSymbol(index, writers)}
                   </React.Fragment>
                 ))}
@@ -89,9 +88,7 @@ const MoviePageDetails = ({ movie }: { movie: Movie }) => {
               <Col className="d-flex">
                 {uniqueDirectors?.map((director, index, directors) => (
                   <React.Fragment key={director.id}>
-                    <NavLink href={`/person/${director.id}`}>
-                      {director.name}
-                    </NavLink>
+                    <Link to={`/person/${director.id}`}>{director.name}</Link>
                     {addBulletSymbol(index, directors)}
                   </React.Fragment>
                 ))}
@@ -107,7 +104,7 @@ const MoviePageDetails = ({ movie }: { movie: Movie }) => {
               <Col className="d-flex">
                 {uniqueCast?.map((actor, index, actors) => (
                   <React.Fragment key={actor.id}>
-                    <NavLink href={`/person/${actor.id}`}>{actor.name}</NavLink>
+                    <Link to={`/person/${actor.id}`}>{actor.name}</Link>
                     {addBulletSymbol(index, actors)}
                   </React.Fragment>
                 ))}
